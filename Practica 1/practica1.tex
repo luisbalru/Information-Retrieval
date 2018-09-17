@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+
+\begin{document}
+
+	\begin{titlepage}
+		\centering
+		\includegraphics[width=0.8\textwidth]{decsai.jpeg}\par\vspace{1cm}
+		{\scshape\LARGE Universidad de Granada \par}
+		\vspace{1cm}
+		{\scshape\Large Recuperaci\'on de Informaci\'on \par}
+		\vspace{1.5cm}
+		{\huge\bfseries Pr\'actica 1: B\'usqueda de informaci\'on en la web\par}
+		\vspace{0.2cm}
+		\noindent\rule{\textwidth}{2pt}
+		\vspace{2cm}
+		{\Large\itshape Miguel \'Angel Torres L\'opez y Luis Balderas Ruiz\par}
+		
+		\vfill
+		
+		% Bottom of the page
+		{\large \today\par}
+	\end{titlepage}
+	
+	\tableofcontents
+	
+	\newpage
+
+
+	\begin{section}{Formatos de codificaci\'on.}
+		
+	\end{section}
+
+	\begin{section}{SEO.}
+		
+	\end{section}
+
+	\begin{section}{Detecci\'on de plagio.}
+		
+		\begin{subsection}{Definici\'on.}
+			Seg\'un \textit{plagiarism.org}, se considera plagio la acci\'on de presentar o usar trabajo de otro autor sin citarlo y sin especificar la fuente de procedencia.
+			Seg\'un la RAE, plagiar se define como la acci\'on de copiar obras ajenas y darlas a conocer como propias.\\
+			
+			En el \'area que nos compete, hablaremos de plagio en texto escrito, aunque tambien se considera plagio el uso de cualquier producci\'on de un autor sin su debida menci\'on. Cabe mencionar el caso de los archivos multimedia. Publicar im\'agenes, v\'ideos o fragmentos y composiciones de los mismos de otro autor sin su correspondiente fuente de procedencia tambi\'en es motivo de conflicto.
+			
+		\end{subsection}
+		
+		\begin{subsection}{Casos de plagio en la actualidad.}
+			En 2015 se abri\'o una p\'agina de Facebook llamada \textit{Cabronazi} que empez\'o a publicar fotograf\'ias con mensajes graciosos. Tres a\~nos despu\'es cuenta con m\'as de 12 millones de seguidores y factura cerca de 370000 euros al a\~no. No obstante, detr\'as de este \'exito muchos usuarios se quejan de que la mayor\'ia de las publicaciones son plagio de otras en las redes sociales. Puede verse la discusi\'on en \textit{https://www.elconfidencial.com/tecnologia/2018-08-09/cabronazi-cabroworld-carlos-soria-bernardo-memes\_1602201/} .\\
+			
+			
+			Un tema que genera m\'as controversia en la actualidad es el de Pedro S\'anchez, al que acusan de haber plagiado ciertas partes de su tesis doctoral. Tras haber publicado en internet dicha tesis, distintos medios han examinado el documento. Estos son los resultados seg\'un uno de esos medios: \textit{https://elpais.com/politica/2018/09/14/actualidad/1536938921\_232616.html}.
+			
+		\end{subsection}
+		
+		\begin{subsection}{M\'etodos para detectar plagio.}
+			Existen numerosos m\'etodos para detectar plagio. Los m\'as frecuentes por su rapidez son los software de detecci\'on de plagio, aunque para usarlos se necesita los documentos en formato digital.\\ 
+			\begin{itemize}
+				
+
+			\item \textbf{Cadenas de texto.} La mayor\'ia del software comercial se basa en la comparaci\'on de cadenas de texto. Usan una base de datos de documentos para enfrentar el documento sospechoso. Esto plantea un inconveniente, puede que la base de datos usada no sea suficientemente extensa o no contenga el documento plagiado. Se podr\'ia intentar a\~nadir la mayor cantidad de textos posibles para mejorar el contraste, pero esto supondr\'ia una penalizaci\'on en tiempo de c\'omputo.\\
+			
+			\item \textbf{Bolsas de palabras.} Una forma de reducir el tiempo ser\'ia usar comparaci\'on de bolsas de palabras. Una bolsa de palabras es un vector que representa las palabras de un texto. Por tanto, al usar bolsas de palabras estamos comprobando si dos textos usan el mismo vocabulario, obviando el orden en el que las palabras aparecen. Esto produce una reducci\'on de la eficacia del m\'etodo.
+			
+			Notar que sendos m\'etodos pueden ser mejorados con el uso de diccionarios de sin\'onimos y traductores para evitar la reformulaci\'on de oraciones y las traducciones.\\
+			
+			\item \textbf{Analizador de estilo.} Existen otras t\'ecnicas que proveen un an\'alisis m\'as profundo del texto, por ejemplo los analizadores de estilo. Este tipo de detectores analizan distintos aspectos en el discurso de un autor para hacer un perfil de escritura. Este perfil se puede caracterizar por la longitud de las oraciones, el uso de muletillas o de reformuladores del discurso. Cuando se introduce un nuevo documento en el sistema, se realizar un an\'alisis para encontrar estilos similares. Hay que notar que un analizador de estilo es sensible a idiomas, por tanto, las traducciones no literales de textos no ser\'ian detectadas por este m\'etodo.
+			
+			\end{itemize}
+		\end{subsection}
+		
+		
+		\begin{subsection}{Temporizaci\'on de b\'usqueda.}
+		\begin{center}
+			\begin{tabular}{p{14cm}}
+				\hline
+				Detecci\'on de plagio \\
+				\hline
+				https://wwwhatsnew.com/2017/10/07/4-sitios-web-para-detectar-plagios/ & 2 minutos \\ \hline
+				Plagiarism detection \\ \hline
+				https://en.wikipedia.org/wiki/Plagiarism\_detection & 11 minutos \\ \hline
+				Plagiarism \\ \hline
+				https://www.plagiarism.org & 8 minutos \\ \hline
+				Bag of words \\ \hline
+				https://medium.com/greyatom/an-introduction-to-bag-of-words-in-nlp-ac967d43b428 & 4 minutos \\ \hline
+				Estilometr\'ia \\ \hline
+				https://www.estilometria.com/ & 2 minutos \\ \hline
+				RAE \\ \hline
+				http://dle.rae.es/?id=TIZy4Xb & 1 minuto \\ \hline
+				El cabronazi plagio \\ \hline
+				https://www.elconfidencial.com/tecnologia/2018-08-09/cabronazi-cabroworld-carlos-soria-bernardo-memes\_1602201/ & 6 minutos \\ \hline
+				Plagio Sanchez \\ \hline
+				https://elpais.com/politica/2018/09/14/actualidad/1536938921\_232616.html & 4 minutos \\ \hline
+			\end{tabular}
+		\end{center}
+		\end{subsection}
+	\end{section}
+
+
+
+
+\end{document}
