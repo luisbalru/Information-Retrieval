@@ -1,0 +1,19 @@
+\babel@toc {spanish}{}
+\contentsline {section}{\numberline {1}Formatos de codificaci\'on}{3}
+\contentsline {subsection}{\numberline {1.1}Codificaci\IeC {\'o}n de caracteres.}{3}
+\contentsline {subsection}{\numberline {1.2}Formatos de codificaci\IeC {\'o}n en inform\IeC {\'a}tica.}{3}
+\contentsline {subsection}{\numberline {1.3}Sistemas operativos y sus formatos}{4}
+\contentsline {subsection}{\numberline {1.4}Temporizaci\'on de b\'usqueda.}{4}
+\contentsline {section}{\numberline {2}SEO.}{5}
+\contentsline {subsection}{\numberline {2.1}SEO como herramienta de marketing digital}{5}
+\contentsline {subsection}{\numberline {2.2}Herramientas SEO}{5}
+\contentsline {subsection}{\numberline {2.3}T\IeC {\'e}cnicas SEO}{6}
+\contentsline {subsubsection}{\numberline {2.3.1}White Hat SEO}{6}
+\contentsline {subsection}{\numberline {2.4}Black hat SEO o Spamdexing}{6}
+\contentsline {subsection}{\numberline {2.5}SEO como profesi\IeC {\'o}n}{7}
+\contentsline {subsection}{\numberline {2.6}Temporizaci\'on de b\'usqueda.}{9}
+\contentsline {section}{\numberline {3}Detecci\'on de plagio}{10}
+\contentsline {subsection}{\numberline {3.1}Definici\'on.}{10}
+\contentsline {subsection}{\numberline {3.2}Casos de plagio en la actualidad.}{10}
+\contentsline {subsection}{\numberline {3.3}M\'etodos para detectar plagio.}{10}
+\contentsline {subsection}{\numberline {3.4}Temporizaci\'on de b\'usqueda.}{11}

@@ -1,0 +1,67 @@
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: practica1.aux
+The style file: plain.bst
+Database file #1: bibliografia.bib.bib
+Warning--to sort, need author or key in unicode
+Warning--to sort, need author or key in redevolution
+Warning--to sort, need author or key in wiki
+Warning--to sort, need author or key in backl
+Warning--to sort, need author or key in seoc
+Warning--to sort, need author or key in tutorial
+Warning--to sort, need author or key in cod
+Warning--to sort, need author or key in seo-prof
+Warning--to sort, need author or key in plagiarism_org
+Warning--to sort, need author or key in rae
+Warning--to sort, need author or key in elconfidencial
+Warning--to sort, need author or key in sanchez
+Warning--empty author in elconfidencial
+Warning--empty journal in elconfidencial
+Warning--empty author in sanchez
+Warning--empty journal in sanchez
+Warning--empty author in plagiarism_org
+Warning--empty journal in plagiarism_org
+Warning--empty author in rae
+Warning--empty journal in rae
+You've used 12 entries,
+            2118 wiz_defined-function locations,
+            528 strings with 5016 characters,
+and the built_in function-call counts, 1926 in all, are:
+= -- 172
+> -- 12
+< -- 0
++ -- 12
+- -- 0
+* -- 94
+:= -- 223
+add.period$ -- 20
+call.type$ -- 12
+change.case$ -- 36
+chr.to.int$ -- 0
+cite$ -- 32
+duplicate$ -- 96
+empty$ -- 257
+format.name$ -- 0
+if$ -- 453
+int.to.chr$ -- 0
+int.to.str$ -- 12
+missing$ -- 4
+newline$ -- 47
+num.names$ -- 0
+pop$ -- 92
+preamble$ -- 1
+purify$ -- 24
+quote$ -- 0
+skip$ -- 91
+stack$ -- 0
+substring$ -- 60
+swap$ -- 8
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 48
+warning$ -- 20
+while$ -- 0
+width$ -- 14
+write$ -- 86
+(There were 20 warnings)
