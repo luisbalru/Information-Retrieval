@@ -4,5 +4,5 @@ Repositorio dedicado a las prácticas de la asignatura Recuperación de informac
 
 ## Índice
 
-### Práctica 1
+### Práctica 0
   - Búsqueda de informacíon y exposición sobre los conceptos de detección de plagio, codificación y SEO.
