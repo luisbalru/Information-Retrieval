@@ -22,8 +22,8 @@ public class Preprocesamiento{
     FileExtraction extract = new FileExtraction();
     ArrayList<String> paths = extract.getPaths(args[0]);
     ArrayList<Fichero> ficheros = new ArrayList<Fichero>();
-    	
-    
+
+
     /*for(String path : paths){
       System.out.println(path);
       Fichero f = new Fichero(path);
@@ -33,14 +33,13 @@ public class Preprocesamiento{
     	Fichero f = new Fichero(paths.get(0) + "/" + paths.get(i));
     	ficheros.add(f);
     }
-    
+
     PrintWriter writer = new PrintWriter("datoslibros.md", "UTF-8");
-    
+    writer.println("| Nombre | Tipo | Charset | Idioma");
     for(int i=0; i<ficheros.size(); i++){
-    	writer.println("Nombre::"+ ficheros.get(i).getName() +" Tipo::"+ ficheros.get(i).getType() +
-				" Charset::"+ ficheros.get(i).getCharset() +"  Idioma::" + ficheros.get(i).getLang());
+    	writer.println("| "+ ficheros.get(i).getName() +" | "+ ficheros.get(i).getType() +
+				" | "+ ficheros.get(i).getCharset() +" | " + ficheros.get(i).getLang());
     }
     writer.close();
   }
 }
-
