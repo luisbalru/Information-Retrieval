@@ -79,7 +79,6 @@ public class Fichero{
 	Parser parser = new AutoDetectParser();
     BodyContentHandler handler = new BodyContentHandler(-1);
     Metadata met = new Metadata();
-    LinkContentHandler link_handler = new LinkContentHandler();
     ParseContext context = new ParseContext();
     parser.parse(inputstream, handler, met, context);
     inputstream.close();
