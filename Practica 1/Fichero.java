@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.tika.Tika;
@@ -42,6 +43,7 @@ public class Fichero{
   String charset;
   String content;
   List<Link> links;
+  HashMap<String,Integer> word_count;
 
   public Fichero(String path) throws IOException, SAXException, TikaException{
     Tika tika = new Tika();
@@ -51,8 +53,10 @@ public class Fichero{
     charset = setCharset(f,tika);
     metadata = new ArrayList<String>();
     links = new ArrayList<Link>();
+    word_count = new HashMap<String, Integer>();
 	getContent_Metadata(f);
 	Links(f);
+	cuentaPalabras();
     language = identifyLanguage(content);
   }
 
@@ -90,7 +94,7 @@ public class Fichero{
       metadata.add(aux);
     }
   }
-
+  
   private void Links(File f) throws IOException, SAXException, TikaException {
 	FileInputStream inputstream = new FileInputStream(f);
 	Parser parser = new AutoDetectParser();
@@ -108,7 +112,24 @@ public class Fichero{
       LanguageResult idioma = identifier.detect(text);
       return idioma.getLanguage();
   }
+  
+  private void cuentaPalabras() {
+	  String[] split = content.split("\\s");
+	  for(String st : split) {
+		  if(word_count.containsKey(st)) {
+			  int num = word_count.get(st) + 1;
+			  word_count.put(st, num);
+		  }
+		  else
+			  word_count.put(st, 0);
+	  }
+  }
+  
+  public HashMap<String, Integer> getPalabras(){
+	  return word_count;
+  }
 
+  	
   public String getName(){
     return name;
   }
@@ -132,10 +153,10 @@ public class Fichero{
   public ArrayList<String> getMetadata(){
     return metadata;
   }
-
+  
   public List<Link> getLinks(){
 	  return links;
   }
-
-
+  
+  
 }
