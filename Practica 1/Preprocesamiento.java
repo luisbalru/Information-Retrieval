@@ -50,7 +50,7 @@ public class Preprocesamiento{
 	  }	
   }
   
-  
+  // Función encontrada en Stackoverflow para acelerar la ordenación de tantas palabras
   private static List ordena(HashMap<String, Integer> m) {
 	  List lista = new LinkedList(m.entrySet());
 	  Collections.sort(lista, new Comparator() {
