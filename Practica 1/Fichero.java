@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.tika.Tika;
 import org.apache.tika.config.TikaConfig;
@@ -25,6 +26,8 @@ import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
+import org.apache.tika.sax.Link;
+import org.apache.tika.sax.LinkContentHandler;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.apache.tika.langdetect.OptimaizeLangDetector;
@@ -38,6 +41,7 @@ public class Fichero{
   String type;
   String charset;
   String content;
+  List<Link> links;
 
   public Fichero(String path) throws IOException, SAXException, TikaException{
     Tika tika = new Tika();
@@ -46,7 +50,9 @@ public class Fichero{
     type = tika.detect(f);
     charset = setCharset(f,tika);
     metadata = new ArrayList<String>();
+    links = new ArrayList<Link>();
 	getContent_Metadata(f);
+	Links(f);
     language = identifyLanguage(content);
   }
 
@@ -73,8 +79,10 @@ public class Fichero{
 	Parser parser = new AutoDetectParser();
     BodyContentHandler handler = new BodyContentHandler(-1);
     Metadata met = new Metadata();
+    LinkContentHandler link_handler = new LinkContentHandler();
     ParseContext context = new ParseContext();
     parser.parse(inputstream, handler, met, context);
+    inputstream.close();
     content = handler.toString();
     String[] metadataNames = met.names();
     String aux;
@@ -82,6 +90,18 @@ public class Fichero{
       aux = name + ": " + met.get(name);
       metadata.add(aux);
     }
+  }
+
+  private void Links(File f) throws IOException, SAXException, TikaException {
+	FileInputStream inputstream = new FileInputStream(f);
+	Parser parser = new AutoDetectParser();
+	BodyContentHandler handler = new BodyContentHandler(-1);
+	Metadata met = new Metadata();
+	LinkContentHandler link_handler = new LinkContentHandler();
+	ParseContext context = new ParseContext();
+	parser.parse(inputstream, link_handler, met, context);
+    inputstream.close();
+    links = link_handler.getLinks();
   }
 
   private String identifyLanguage(String text) throws IOException{
@@ -113,4 +133,10 @@ public class Fichero{
   public ArrayList<String> getMetadata(){
     return metadata;
   }
+
+  public List<Link> getLinks(){
+	  return links;
+  }
+
+
 }
