@@ -30,25 +30,32 @@ import org.xml.sax.SAXException;
 
 
 public class Preprocesamiento{
+	 /*@SuppressWarnings("all") public static void main() {
+		  String s;
+		 }	*/
 	
-  public static void imprimeDatos(ArrayList<Fichero> ficheros,String path) throws FileNotFoundException, UnsupportedEncodingException {
-	  PrintWriter writer = new PrintWriter(path+"/datoslibros.md", "UTF-8");
-	    
-	    for(int i=0; i<ficheros.size(); i++){
-	    	writer.println("| NOMBRE | TIPO | CHARSET | IDIOMA |");
-	    	writer.println("|--------|--------|---------|---------|");
-	    	writer.println(" | "+ ficheros.get(i).getName() +" | "+ ficheros.get(i).getType() +
-					" | "+ ficheros.get(i).getCharset() +" | " + ficheros.get(i).getLang()+" | " );
-	    }
-	    writer.close();
+	
+  public static void imprimeDatos(ArrayList<Fichero> ficheros) throws FileNotFoundException, UnsupportedEncodingException {
+	  for(int i=0; i<ficheros.size(); i++){
+		String path = ficheros.get(i).directorio;
+		PrintWriter writer = new PrintWriter(path+"/datoslibro_" + ficheros.get(i).getName()+".md", "UTF-8");
+		writer.println("| NOMBRE | TIPO | CHARSET | IDIOMA |");
+	  	writer.println("|--------|--------|---------|---------|");
+	   	writer.println(" | "+ ficheros.get(i).getName() +" | "+ ficheros.get(i).getType() +
+				" | "+ ficheros.get(i).getCharset() +" | " + ficheros.get(i).getLang()+" | " );
+	   	writer.close();
+	  }
+	  
   }
   
-  public static void imprimeLinks(ArrayList<Fichero> ficheros, String path) throws FileNotFoundException, UnsupportedEncodingException {
+  public static void imprimeLinks(ArrayList<Fichero> ficheros) throws FileNotFoundException, UnsupportedEncodingException {
 	  for(int i=0; i<ficheros.size(); i++) {
+		String path = ficheros.get(i).directorio;
 	  	PrintWriter writer = new PrintWriter(path+"/links_" + ficheros.get(i).getName()+".txt", "UTF-8");
 	  	List<Link> links = ficheros.get(i).getLinks();
 	  	for(Link enlace : links)
 	  		writer.println(enlace.toString());
+	  	writer.close();
 	  }	
   }
   
@@ -64,9 +71,10 @@ public class Preprocesamiento{
 	  return lista;
   }
   
-  public static void cuentaPalabras(ArrayList<Fichero> f, String path) throws FileNotFoundException, UnsupportedEncodingException {
+  public static void cuentaPalabras(ArrayList<Fichero> f) throws FileNotFoundException, UnsupportedEncodingException {
 	  List list;
 	  for(int i=0; i<f.size(); i++) {
+		  String path = f.get(i).directorio;
 		  PrintWriter writer = new PrintWriter(path+"/word_count_" + f.get(i).getName() + ".txt", "UTF-8");
 		  list = ordena(f.get(i).getPalabras());
 		  Iterator it = new ReverseListIterator(list);
@@ -97,25 +105,30 @@ public class Preprocesamiento{
 	    		String fi = sc.next();
 	    		Fichero fichero = new Fichero(fi);
 	    		ficheros.add(fichero);
-	    		System.out.println(dir);
-	    		imprimeDatos(ficheros,dir);
-	    	    imprimeLinks(ficheros,dir);
-	    	    cuentaPalabras(ficheros,dir);
+	    		ficheros.get(0).directorio = dir;
+	    		imprimeDatos(ficheros);
+	    	    imprimeLinks(ficheros);
+	    	    cuentaPalabras(ficheros);
+	    	    keep = false;
 	    	}
 	    	else if(eleccion == 1) {
 	    		System.out.println("Dime el directorio a procesar");
 	    		String dir = sc.next();
 	    		FileExtraction extract = new FileExtraction();
 	    	    ArrayList<String> paths = extract.getPaths(dir);
+	    	    System.out.println("Dime el directorio donde guardar toda la información");
+	    		String directory = sc.next();
 	    	    for(int i=1; i<paths.size(); i++){
 	    	    	File fi = new File(paths.get(0) + "/" + paths.get(i));
 	    	    	fi.mkdir();
 	    	    	Fichero f = new Fichero(paths.get(0) + "/" + paths.get(i));
+	    	    	f.directorio = directory;
 	    	    	ficheros.add(f);
 	    	    }
-	    	    imprimeDatos(ficheros,dir);
-	    	    imprimeLinks(ficheros,dir);
-	    	    cuentaPalabras(ficheros,dir);
+	    	    imprimeDatos(ficheros);
+	    	    imprimeLinks(ficheros);
+	    	    cuentaPalabras(ficheros);
+	    	    keep = false;
 	    	    
 	    	}
 	    	else {

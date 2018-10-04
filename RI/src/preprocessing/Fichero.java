@@ -42,6 +42,7 @@ public class Fichero{
   String content;
   List<Link> links;
   HashMap<String,Integer> word_count;
+  String directorio;
 
   public Fichero(String path) throws IOException, SAXException, TikaException{
     Tika tika = new Tika();
@@ -98,8 +99,9 @@ public class Fichero{
 	  LanguageDetector identifier  = new  OptimaizeLangDetector().loadModels();
       LanguageResult idioma = identifier.detect(text);
       return idioma.getLanguage();
+      
   }
-  
+
   private void cuentaPalabras() {
 	  String[] split = content.split("\\s");
 	  for(String st : split) {
