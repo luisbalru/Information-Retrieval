@@ -8,6 +8,7 @@
 
 package preprocessing;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,6 +21,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import org.apache.commons.collections4.iterators.ReverseListIterator;
 import org.apache.tika.exception.TikaException;
@@ -29,8 +31,8 @@ import org.xml.sax.SAXException;
 
 public class Preprocesamiento{
 	
-  public static void imprimeDatos(ArrayList<Fichero> ficheros) throws FileNotFoundException, UnsupportedEncodingException {
-	  PrintWriter writer = new PrintWriter("datoslibros.md", "UTF-8");
+  public static void imprimeDatos(ArrayList<Fichero> ficheros,String path) throws FileNotFoundException, UnsupportedEncodingException {
+	  PrintWriter writer = new PrintWriter(path+"/datoslibros.md", "UTF-8");
 	    
 	    for(int i=0; i<ficheros.size(); i++){
 	    	writer.println("| NOMBRE | TIPO | CHARSET | IDIOMA |");
@@ -41,9 +43,9 @@ public class Preprocesamiento{
 	    writer.close();
   }
   
-  public static void imprimeLinks(ArrayList<Fichero> ficheros) throws FileNotFoundException, UnsupportedEncodingException {
+  public static void imprimeLinks(ArrayList<Fichero> ficheros, String path) throws FileNotFoundException, UnsupportedEncodingException {
 	  for(int i=0; i<ficheros.size(); i++) {
-	  	PrintWriter writer = new PrintWriter("links_" + ficheros.get(i).getName()+".txt", "UTF-8");
+	  	PrintWriter writer = new PrintWriter(path+"/links_" + ficheros.get(i).getName()+".txt", "UTF-8");
 	  	List<Link> links = ficheros.get(i).getLinks();
 	  	for(Link enlace : links)
 	  		writer.println(enlace.toString());
@@ -62,10 +64,10 @@ public class Preprocesamiento{
 	  return lista;
   }
   
-  public static void cuentaPalabras(ArrayList<Fichero> f) throws FileNotFoundException, UnsupportedEncodingException {
+  public static void cuentaPalabras(ArrayList<Fichero> f, String path) throws FileNotFoundException, UnsupportedEncodingException {
 	  List list;
 	  for(int i=0; i<f.size(); i++) {
-		  PrintWriter writer = new PrintWriter("word_count_" + f.get(i).getName() + ".txt", "UTF-8");
+		  PrintWriter writer = new PrintWriter(path+"/word_count_" + f.get(i).getName() + ".txt", "UTF-8");
 		  list = ordena(f.get(i).getPalabras());
 		  Iterator it = new ReverseListIterator(list);
 		  while(it.hasNext()) {
@@ -76,19 +78,59 @@ public class Preprocesamiento{
   }
 
   public static void main(String[] args) throws IOException, SAXException, TikaException{
-    FileExtraction extract = new FileExtraction();
-    ArrayList<String> paths = extract.getPaths(args[0]);
+    boolean keep = true;
     ArrayList<Fichero> ficheros = new ArrayList<Fichero>();
-    	
-    /*for(int i=1; i<paths.size(); i++){
-    	Fichero f = new Fichero(paths.get(0) + "/" + paths.get(i));
-    	ficheros.add(f);
-    }*/
-    
-    Fichero f = new Fichero(paths.get(0) + "/" + paths.get(9));
-	ficheros.add(f);
-    imprimeDatos(ficheros);
-    imprimeLinks(ficheros);
-    cuentaPalabras(ficheros);
+	try {
+		while(keep) {
+	    	Scanner sc = new Scanner(System.in);
+	    	System.out.println("***************************************");
+	    	System.out.println("Bienvenido al sistema de preprocesamiento de archivos");
+	    	System.out.println("Escriba 0 para leer un archivo o 1 para leer de un directorio");
+	    	int eleccion = sc.nextInt();
+	    	if(eleccion==0)
+	    	{
+	    		System.out.println("Crearemos un directorio. ¿Cómo se llamará?");
+	    		String dir = sc.next();
+	    		File f = new File(dir);
+	    		f.mkdir();
+	    		System.out.println("Dame el nombre del archivo a estudiar");
+	    		String fi = sc.next();
+	    		Fichero fichero = new Fichero(fi);
+	    		ficheros.add(fichero);
+	    		System.out.println(dir);
+	    		imprimeDatos(ficheros,dir);
+	    	    imprimeLinks(ficheros,dir);
+	    	    cuentaPalabras(ficheros,dir);
+	    	}
+	    	else if(eleccion == 1) {
+	    		System.out.println("Dime el directorio a procesar");
+	    		String dir = sc.next();
+	    		FileExtraction extract = new FileExtraction();
+	    	    ArrayList<String> paths = extract.getPaths(dir);
+	    	    for(int i=1; i<paths.size(); i++){
+	    	    	File fi = new File(paths.get(0) + "/" + paths.get(i));
+	    	    	fi.mkdir();
+	    	    	Fichero f = new Fichero(paths.get(0) + "/" + paths.get(i));
+	    	    	ficheros.add(f);
+	    	    }
+	    	    imprimeDatos(ficheros,dir);
+	    	    imprimeLinks(ficheros,dir);
+	    	    cuentaPalabras(ficheros,dir);
+	    	    
+	    	}
+	    	else {
+	    		System.out.println("No introdujo ningún número correcto. ¿Desea salir (S=1/N=0)?");
+	    		if(!sc.nextBoolean())
+	    			keep = false;
+	    	}
+		}
+    }
+	catch (Exception e)
+    {
+        System.err.println("Error:" + e.getMessage());
+                    e.printStackTrace();
+    }
+	  
+
   }
 }
