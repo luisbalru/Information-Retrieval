@@ -36,15 +36,15 @@ public class Preprocesamiento{
 	
 	
   public static void imprimeDatos(ArrayList<Fichero> ficheros) throws FileNotFoundException, UnsupportedEncodingException {
-	  for(int i=0; i<ficheros.size(); i++){
-		String path = ficheros.get(i).directorio;
-		PrintWriter writer = new PrintWriter(path+"/datoslibro_" + ficheros.get(i).getName()+".md", "UTF-8");
-		writer.println("| NOMBRE | TIPO | CHARSET | IDIOMA |");
+	  PrintWriter writer = new PrintWriter(ficheros.get(0).directorio+"/datoslibros.md", "UTF-8");
+	  writer.println("| NOMBRE | TIPO | CHARSET | IDIOMA |");
 	  	writer.println("|--------|--------|---------|---------|");
+	  for(int i=0; i<ficheros.size(); i++){
 	   	writer.println(" | "+ ficheros.get(i).getName() +" | "+ ficheros.get(i).getType() +
 				" | "+ ficheros.get(i).getCharset() +" | " + ficheros.get(i).getLang()+" | " );
-	   	writer.close();
+	   	
 	  }
+	  writer.close();
 	  
   }
   
@@ -59,31 +59,36 @@ public class Preprocesamiento{
 	  }	
   }
   
-  
-  private static List ordena(HashMap<String, Integer> m) {
-	  List lista = new LinkedList(m.entrySet());
-	  Collections.sort(lista, new Comparator() {
-		  	public int compare(Object o1, Object o2) {
-		  		return ((Comparable) (((Map.Entry) (o1)).getValue())).compareTo(((Map.Entry) (o2)).getValue());
-		  	}
-	  });
-	  
-	  return lista;
-  }
-  
   public static void cuentaPalabras(ArrayList<Fichero> f) throws FileNotFoundException, UnsupportedEncodingException {
-	  List list;
 	  for(int i=0; i<f.size(); i++) {
 		  String path = f.get(i).directorio;
 		  PrintWriter writer = new PrintWriter(path+"/word_count_" + f.get(i).getName() + ".txt", "UTF-8");
-		  list = ordena(f.get(i).getPalabras());
-		  Iterator it = new ReverseListIterator(list);
+		  Iterator it = new ReverseListIterator(f.get(i).lista);
 		  while(it.hasNext()) {
 			  writer.println(it.next().toString());
 		  }
 		  writer.close();
 	  }
   }
+  
+  public static void CSV(Fichero f) throws FileNotFoundException {
+	  List list;
+	  PrintWriter pw = new PrintWriter(new File(f.directorio+"/"+f.getName()+"_datos.csv"));
+	  StringBuilder sb = new StringBuilder();
+	  Iterator it = new ReverseListIterator(f.lista);
+	  int i = 1;
+	  while(it.hasNext()) {
+		  HashMap.Entry pareja = (HashMap.Entry) it.next();
+		  sb.append(Integer.toString(i));
+		  sb.append(',');
+		  sb.append(pareja.getValue().toString());
+		  sb.append('\n');
+		  i++;
+	  }
+	  pw.write(sb.toString());
+	  pw.close();
+  }
+  
 
   public static void main(String[] args) throws IOException, SAXException, TikaException{
     boolean keep = true;
@@ -109,6 +114,11 @@ public class Preprocesamiento{
 	    		imprimeDatos(ficheros);
 	    	    imprimeLinks(ficheros);
 	    	    cuentaPalabras(ficheros);
+	    	    CSV(ficheros.get(0));
+	    	    String csv = ficheros.get(0).directorio+"/"+ficheros.get(0).getName()+"_datos.csv";
+	    	    String name = ficheros.get(0).directorio+"/"+ficheros.get(0).getName();
+	    	    ProcessBuilder pb = new ProcessBuilder("python", "/home/luisbalru/plot.py", csv,name);
+	    	    Process p = pb.start();
 	    	    keep = false;
 	    	}
 	    	else if(eleccion == 1) {
@@ -119,10 +129,9 @@ public class Preprocesamiento{
 	    	    System.out.println("Dime el directorio donde guardar toda la información");
 	    		String directory = sc.next();
 	    	    for(int i=1; i<paths.size(); i++){
-	    	    	File fi = new File(paths.get(0) + "/" + paths.get(i));
-	    	    	fi.mkdir();
+	    	    	System.out.println(paths.get(0) + "/" + paths.get(i));
 	    	    	Fichero f = new Fichero(paths.get(0) + "/" + paths.get(i));
-	    	    	f.directorio = directory;
+	    	    	f.directorio = dir;
 	    	    	ficheros.add(f);
 	    	    }
 	    	    imprimeDatos(ficheros);

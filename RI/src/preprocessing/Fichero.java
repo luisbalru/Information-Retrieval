@@ -14,8 +14,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.tika.Tika;
 import org.apache.tika.detect.AutoDetectReader;
@@ -41,7 +46,8 @@ public class Fichero{
   String charset;
   String content;
   List<Link> links;
-  HashMap<String,Integer> word_count;
+  static HashMap<String,Integer> word_count;
+  List lista;
   String directorio;
 
   public Fichero(String path) throws IOException, SAXException, TikaException{
@@ -56,6 +62,8 @@ public class Fichero{
 	getContent_Metadata(f);
 	cuentaPalabras();
     language = identifyLanguage(content);
+    lista = ordena();
+    
   }
 
   private String setCharset(File f, Tika tika) throws FileNotFoundException{
@@ -112,6 +120,17 @@ public class Fichero{
 		  else
 			  word_count.put(st, 0);
 	  }
+  }
+  
+  private static List ordena() {
+	  List lista = new LinkedList(word_count.entrySet());
+	  Collections.sort(lista, new Comparator() {
+		  	public int compare(Object o1, Object o2) {
+		  		return ((Comparable) (((Map.Entry) (o1)).getValue())).compareTo(((Map.Entry) (o2)).getValue());
+		  	}
+	  });
+	  
+	  return lista;
   }
   
   public HashMap<String, Integer> getPalabras(){
