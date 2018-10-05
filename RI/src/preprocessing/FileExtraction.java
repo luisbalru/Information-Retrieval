@@ -1,6 +1,6 @@
 /*
  * Java Class to list a directory and
- * extract the content of a file
+ * extract the content of a file 
  */
 
 /**
