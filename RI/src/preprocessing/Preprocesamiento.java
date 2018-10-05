@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,10 +36,15 @@ public class Preprocesamiento{
 		 }	*/
 	
 	
-  public static void imprimeDatos(ArrayList<Fichero> ficheros) throws FileNotFoundException, UnsupportedEncodingException {
-	  PrintWriter writer = new PrintWriter(ficheros.get(0).directorio+"/datoslibros.md", "UTF-8");
+  public static void imprimeDatos(ArrayList<Fichero> ficheros,boolean muchos, String dir) throws FileNotFoundException, UnsupportedEncodingException {
+	  PrintWriter writer;
+	  if(muchos)
+		writer = new PrintWriter(dir+"/datoslibros.md", "UTF-8");
+	  else
+	  	writer = new PrintWriter(ficheros.get(0).directorio+"/datoslibros.md", "UTF-8");
+	  
 	  writer.println("| NOMBRE | TIPO | CHARSET | IDIOMA |");
-	  	writer.println("|--------|--------|---------|---------|");
+	  writer.println("|--------|--------|---------|---------|");
 	  for(int i=0; i<ficheros.size(); i++){
 	   	writer.println(" | "+ ficheros.get(i).getName() +" | "+ ficheros.get(i).getType() +
 				" | "+ ficheros.get(i).getCharset() +" | " + ficheros.get(i).getLang()+" | " );
@@ -111,7 +117,7 @@ public class Preprocesamiento{
 	    		Fichero fichero = new Fichero(fi);
 	    		ficheros.add(fichero);
 	    		ficheros.get(0).directorio = dir;
-	    		imprimeDatos(ficheros);
+	    		imprimeDatos(ficheros,false," ");
 	    	    imprimeLinks(ficheros);
 	    	    cuentaPalabras(ficheros);
 	    	    CSV(ficheros.get(0));
@@ -119,6 +125,8 @@ public class Preprocesamiento{
 	    	    String name = ficheros.get(0).directorio+"/"+ficheros.get(0).getName();
 	    	    ProcessBuilder pb = new ProcessBuilder("python", "/home/luisbalru/plot.py", csv,name);
 	    	    Process p = pb.start();
+	    	    p.waitFor();
+	    	    System.out.println(p.exitValue());
 	    	    keep = false;
 	    	}
 	    	else if(eleccion == 1) {
@@ -126,17 +134,30 @@ public class Preprocesamiento{
 	    		String dir = sc.next();
 	    		FileExtraction extract = new FileExtraction();
 	    	    ArrayList<String> paths = extract.getPaths(dir);
-	    	    System.out.println("Dime el directorio donde guardar toda la información");
-	    		String directory = sc.next();
+	    	    //System.out.println("Dime el directorio donde guardar toda la información");
+	    		//String directory = sc.next();
 	    	    for(int i=1; i<paths.size(); i++){
-	    	    	System.out.println(paths.get(0) + "/" + paths.get(i));
+	    	    	//System.out.println(paths.get(0) + "/" + paths.get(i));
 	    	    	Fichero f = new Fichero(paths.get(0) + "/" + paths.get(i));
-	    	    	f.directorio = dir;
+	    	    	f.directorio = paths.get(0) + "/" + paths.get(i)+"_dir";
+	    	    	File file = new File(f.directorio);
+		    	    Files.createDirectory(file.toPath());
 	    	    	ficheros.add(f);
 	    	    }
-	    	    imprimeDatos(ficheros);
+	    	    imprimeDatos(ficheros,true,dir);
 	    	    imprimeLinks(ficheros);
 	    	    cuentaPalabras(ficheros);
+	    	    
+	    	    for(int i=0; i<ficheros.size();i++) {
+	    	    	CSV(ficheros.get(i));
+	    	    	String csv = ficheros.get(i).directorio+"/"+ficheros.get(i).getName()+"_datos.csv";
+		    	    String name = ficheros.get(i).directorio+"/"+ficheros.get(i).getName();
+		    	    ProcessBuilder pb = new ProcessBuilder("python", "/home/luisbalru/plot.py", csv,name);
+		    	    Process p = pb.start();
+		    	    p.waitFor();
+		    	    System.out.println(p.exitValue());
+		    	    p.destroy();
+	    	    }
 	    	    keep = false;
 	    	    
 	    	}
