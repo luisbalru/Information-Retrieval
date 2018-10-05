@@ -152,11 +152,14 @@ public class Preprocesamiento{
 	    	    	CSV(ficheros.get(i));
 	    	    	String csv = ficheros.get(i).directorio+"/"+ficheros.get(i).getName()+"_datos.csv";
 		    	    String name = ficheros.get(i).directorio+"/"+ficheros.get(i).getName();
+	    	    	String csv = ficheros.get(0).directorio+"/"+ficheros.get(i).getName()+"_datos.csv";
+		    	    String name = ficheros.get(0).directorio+"/"+ficheros.get(i).getName();
 		    	    ProcessBuilder pb = new ProcessBuilder("python", "/home/luisbalru/plot.py", csv,name);
 		    	    Process p = pb.start();
 		    	    p.waitFor();
 		    	    System.out.println(p.exitValue());
 		    	    p.destroy();
+
 	    	    }
 	    	    keep = false;
 	    	    
