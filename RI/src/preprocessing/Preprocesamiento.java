@@ -119,6 +119,8 @@ public class Preprocesamiento{
 	    	    String name = ficheros.get(0).directorio+"/"+ficheros.get(0).getName();
 	    	    ProcessBuilder pb = new ProcessBuilder("python", "/home/luisbalru/plot.py", csv,name);
 	    	    Process p = pb.start();
+	    	    p.waitFor();
+	    	    System.out.println(p.exitValue());
 	    	    keep = false;
 	    	}
 	    	else if(eleccion == 1) {
@@ -129,7 +131,7 @@ public class Preprocesamiento{
 	    	    System.out.println("Dime el directorio donde guardar toda la información");
 	    		String directory = sc.next();
 	    	    for(int i=1; i<paths.size(); i++){
-	    	    	System.out.println(paths.get(0) + "/" + paths.get(i));
+	    	    	//System.out.println(paths.get(0) + "/" + paths.get(i));
 	    	    	Fichero f = new Fichero(paths.get(0) + "/" + paths.get(i));
 	    	    	f.directorio = dir;
 	    	    	ficheros.add(f);
@@ -137,6 +139,15 @@ public class Preprocesamiento{
 	    	    imprimeDatos(ficheros);
 	    	    imprimeLinks(ficheros);
 	    	    cuentaPalabras(ficheros);
+	    	    
+	    	    for(int i=0; i<ficheros.size();i++) {
+	    	    	String csv = ficheros.get(0).directorio+"/"+ficheros.get(i).getName()+"_datos.csv";
+		    	    String name = ficheros.get(0).directorio+"/"+ficheros.get(i).getName();
+		    	    ProcessBuilder pb = new ProcessBuilder("python", "/home/luisbalru/plot.py", csv,name);
+		    	    Process p = pb.start();
+		    	    p.waitFor();
+		    	    System.out.println(p.exitValue());
+	    	    }
 	    	    keep = false;
 	    	    
 	    	}
