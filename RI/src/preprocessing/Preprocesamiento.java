@@ -96,7 +96,7 @@ public class Preprocesamiento{
 	try {
 		while(keep) {
 	    	Scanner sc = new Scanner(System.in);
-	    	System.out.println("***************************************");
+	    	System.out.println("**************************************");
 	    	System.out.println("Bienvenido al sistema de preprocesamiento de archivos");
 	    	System.out.println("Escriba 0 para leer un archivo o 1 para leer de un directorio");
 	    	int eleccion = sc.nextInt();
