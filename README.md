@@ -9,3 +9,6 @@ Repositorio dedicado a las prácticas de la asignatura Recuperación de informac
 
 ### Práctica 1 (carpeta RI)
 -	Preprocesado de documentos. Parser de documentos con TIKA
+
+### Práctica 2
+- Preprocesamiento de documentos. Análisis del texto con LUCENE
