@@ -97,8 +97,7 @@ public class Preprocesamiento{
   
 
   public static void main(String[] args) throws IOException, SAXException, TikaException{
-    /*
-    boolean keep = true;
+    /*boolean keep = true;
     ArrayList<Fichero> ficheros = new ArrayList<Fichero>();
 	try {
 		while(keep) {
