@@ -54,50 +54,42 @@ public class Preprocesamiento{
 	  
   }
   
-  public static void imprimeLinks(ArrayList<Fichero> ficheros) throws FileNotFoundException, UnsupportedEncodingException {
-	  for(int i=0; i<ficheros.size(); i++) {
-		String path = ficheros.get(i).directorio;
-	  	PrintWriter writer = new PrintWriter(path+"/links_" + ficheros.get(i).getName()+".txt", "UTF-8");
-	  	List<Link> links = ficheros.get(i).getLinks();
-	  	for(Link enlace : links)
-	  		writer.println(enlace.toString());
-	  	writer.close();
-	  }	
-  }
-  
   public static void cuentaPalabras(ArrayList<Fichero> f) throws FileNotFoundException, UnsupportedEncodingException {
 	  for(int i=0; i<f.size(); i++) {
 		  String path = f.get(i).directorio;
-		  PrintWriter writer = new PrintWriter(path+"/word_count_" + f.get(i).getName() + ".txt", "UTF-8");
-		  Iterator it = new ReverseListIterator(f.get(i).lista);
-		  while(it.hasNext()) {
-			  writer.println(it.next().toString());
+		  for(int j=0; i< f.get(i).lista.size(); i++) {
+			  PrintWriter writer = new PrintWriter(path+"/word_count_" + f.get(i).getName() + "_" + j +".txt", "UTF-8");
+			  Iterator it = new ReverseListIterator(f.get(i).lista.get(j));
+			  while(it.hasNext()) {
+				  writer.println(it.next().toString());
+			  }
+			  writer.close();
 		  }
-		  writer.close();
 	  }
   }
   
   public static void CSV(Fichero f) throws FileNotFoundException {
-	  List list;
-	  PrintWriter pw = new PrintWriter(new File(f.directorio+"/"+f.getName()+"_datos.csv"));
-	  StringBuilder sb = new StringBuilder();
-	  Iterator it = new ReverseListIterator(f.lista);
-	  int i = 1;
-	  while(it.hasNext()) {
-		  HashMap.Entry pareja = (HashMap.Entry) it.next();
-		  sb.append(Integer.toString(i));
-		  sb.append(',');
-		  sb.append(pareja.getValue().toString());
-		  sb.append('\n');
-		  i++;
+	  for(int i = 0; i< f.lista.size(); i++) {
+	  	  PrintWriter pw = new PrintWriter(new File(f.directorio+"/"+f.getName()+ "_" + i + "_datos.csv"));
+		  StringBuilder sb = new StringBuilder();
+		  Iterator it = new ReverseListIterator(f.lista.get(i));
+		  int j = 1;
+		  while(it.hasNext()) {
+			  HashMap.Entry pareja = (HashMap.Entry) it.next();
+			  sb.append(Integer.toString(i));
+			  sb.append(',');
+			  sb.append(pareja.getValue().toString());
+			  sb.append('\n');
+			  j++;
+		  }
+		  pw.write(sb.toString());
+		  pw.close();
 	  }
-	  pw.write(sb.toString());
-	  pw.close();
   }
   
 
   public static void main(String[] args) throws IOException, SAXException, TikaException{
-    /*boolean keep = true;
+    boolean keep = true;
     ArrayList<Fichero> ficheros = new ArrayList<Fichero>();
 	try {
 		while(keep) {
@@ -118,7 +110,6 @@ public class Preprocesamiento{
 	    		ficheros.add(fichero);
 	    		ficheros.get(0).directorio = dir;
 	    		imprimeDatos(ficheros,false," ");
-	    	    imprimeLinks(ficheros);
 	    	    cuentaPalabras(ficheros);
 	    	    CSV(ficheros.get(0));
 	    	    String csv = ficheros.get(0).directorio+"/"+ficheros.get(0).getName()+"_datos.csv";
@@ -145,24 +136,20 @@ public class Preprocesamiento{
 	    	    	ficheros.add(f);
 	    	    }
 	    	    imprimeDatos(ficheros,true,dir);
-	    	    imprimeLinks(ficheros);
 	    	    cuentaPalabras(ficheros);
 	    	    
 	    	    for(int i=0; i<ficheros.size();i++) {
 	    	    	CSV(ficheros.get(i));
 	    	    	String csv = ficheros.get(i).directorio+"/"+ficheros.get(i).getName()+"_datos.csv";
 		    	    String name = ficheros.get(i).directorio+"/"+ficheros.get(i).getName();
-	    	    	String csv = ficheros.get(0).directorio+"/"+ficheros.get(i).getName()+"_datos.csv";
-		    	    String name = ficheros.get(0).directorio+"/"+ficheros.get(i).getName();
 		    	    ProcessBuilder pb = new ProcessBuilder("python", "/home/luisbalru/plot.py", csv,name);
 		    	    Process p = pb.start();
 		    	    p.waitFor();
 		    	    System.out.println(p.exitValue());
 		    	    p.destroy();
-
 	    	    }
-	    	    keep = false;
 	    	    
+	    	    keep = false;
 	    	}
 	    	else {
 	    		System.out.println("No introdujo ningún número correcto. ¿Desea salir (S=1/N=0)?");
@@ -177,6 +164,6 @@ public class Preprocesamiento{
                     e.printStackTrace();
     }
 	  
-*/
+
   }
 }
