@@ -46,8 +46,8 @@ public class Fichero{
   String charset;
   String content;
   List<Link> links;
-  static HashMap<String,Integer> word_count;
-  List lista;
+  static ArrayList<HashMap<String,Integer>> word_count;
+  ArrayList<List> lista;
   String directorio;
 
   public Fichero(String path) throws IOException, SAXException, TikaException{
@@ -57,12 +57,14 @@ public class Fichero{
     type = tika.detect(f);
     charset = setCharset(f,tika);
     metadata = new ArrayList<String>();
+    lista = new ArrayList<List>();
     links = new ArrayList<Link>();
-    word_count = new HashMap<String, Integer>();
+    word_count = new ArrayList<HashMap<String, Integer>>();
 	getContent_Metadata(f);
 	cuentaPalabras();
     language = identifyLanguage(content);
-    lista = ordena();
+    for(int i=0; i<word_count.size();i++)
+    	lista.add(ordena(i));
     
   }
 
@@ -122,8 +124,8 @@ public class Fichero{
 	  }*/
   }
   
-  private static List ordena() {
-	  List lista = new LinkedList(word_count.entrySet());
+  private static List ordena(int i) {
+	  List lista = new LinkedList(word_count.get(i).entrySet());
 	  Collections.sort(lista, new Comparator() {
 		  	public int compare(Object o1, Object o2) {
 		  		return ((Comparable) (((Map.Entry) (o1)).getValue())).compareTo(((Map.Entry) (o2)).getValue());
@@ -133,8 +135,8 @@ public class Fichero{
 	  return lista;
   }
   
-  public HashMap<String, Integer> getPalabras(){
-	  return word_count;
+  public HashMap<String, Integer> getPalabras(int i){
+	  return word_count.get(i);
   }
 
   	
