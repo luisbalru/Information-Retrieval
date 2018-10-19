@@ -32,11 +32,11 @@ import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.apache.tika.sax.Link;
 import org.apache.tika.sax.LinkContentHandler;
-import org.xml.sax.SAXException;
 import org.apache.tika.langdetect.OptimaizeLangDetector;
 import org.apache.tika.language.detect.LanguageDetector;
 import org.apache.tika.language.detect.LanguageResult;
 import org.apache.tika.sax.TeeContentHandler;
+import org.xml.sax.SAXException;
 
 public class Fichero{
   String name;
@@ -45,7 +45,6 @@ public class Fichero{
   String type;
   String charset;
   String content;
-  List<Link> links;
   static ArrayList<HashMap<String,Integer>> word_count;
   ArrayList<List> lista;
   String directorio;
@@ -58,14 +57,12 @@ public class Fichero{
     charset = setCharset(f,tika);
     metadata = new ArrayList<String>();
     lista = new ArrayList<List>();
-    links = new ArrayList<Link>();
     word_count = new ArrayList<HashMap<String, Integer>>();
 	getContent_Metadata(f);
 	cuentaPalabras();
     language = identifyLanguage(content);
     for(int i=0; i<word_count.size();i++)
     	lista.add(ordena(i));
-    
   }
 
   private String setCharset(File f, Tika tika) throws FileNotFoundException{
@@ -97,7 +94,6 @@ public class Fichero{
     parser.parse(inputstream, teeHandler, met, context);
     inputstream.close();
     content = handler.toString();
-    links = link_handler.getLinks();
     String[] metadataNames = met.names();
     String aux;
     for(String name : metadataNames){
@@ -162,11 +158,5 @@ public class Fichero{
 
   public ArrayList<String> getMetadata(){
     return metadata;
-  }
-  
-  public List<Link> getLinks(){
-	  return links;
-  }
-  
-  
+  }  
 }
