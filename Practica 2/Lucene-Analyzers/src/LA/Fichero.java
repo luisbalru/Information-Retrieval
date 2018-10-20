@@ -145,7 +145,7 @@ public class Fichero{
 					  word_count.get(i).put(st, num);
 				  }
 				  else
-					  word_count.get(i).put(st, 0);
+					  word_count.get(i).put(st, 1);
 		  }
 	  }
   }
