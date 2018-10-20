@@ -57,7 +57,7 @@ public class Preprocesamiento{
   public static void cuentaPalabras(ArrayList<Fichero> f) throws FileNotFoundException, UnsupportedEncodingException {
 	  for(int i=0; i<f.size(); i++) {
 		  String path = f.get(i).directorio;
-		  for(int j=0; i< f.get(i).lista.size(); i++) {
+		  for(int j=0; j< f.get(i).lista.size(); j++) {
 			  PrintWriter writer = new PrintWriter(path+"/word_count_" + f.get(i).getName() + "_" + j +".txt", "UTF-8");
 			  Iterator it = new ReverseListIterator(f.get(i).lista.get(j));
 			  while(it.hasNext()) {
