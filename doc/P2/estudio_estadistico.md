@@ -51,7 +51,7 @@ En primer lugar, observo que las lenguas romances están tratadas de una manera 
 
 #### Compendio di Chimica Fisiologica
 
-|    | WhiteSpaceAnalyzer | SimpleAnalyzer | StopAnalyzer | StandardAnalyzer | UAX29URLEmailAnalyzer | EnglishAnalyzer |
+|    | WhiteSpaceAnalyzer | SimpleAnalyzer | StopAnalyzer | StandardAnalyzer | UAX29URLEmailAnalyzer | ItalianAnalyzer |
 | --- | ---- | ---- | ---- | ----- | ---- | ---- |
  | Nº tokens | 6433 | 4095 | 4064 | 4487 | 4491 | 4392 |
  | **sostanza** | "sostanza":32, "Sostanza":3, "(sostanza":2, "Amiloide-sostanza":1, "sostanza,":1, "       Sostanza":1 | "sostanza"=40 | "sostanza"=40 | "sostanza"=40 | "sostanza"=40 | "sostanza"=40 | 
