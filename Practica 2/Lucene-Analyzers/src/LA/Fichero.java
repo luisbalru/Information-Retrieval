@@ -157,7 +157,6 @@ public class Fichero{
 		  		return ((Comparable) (((Map.Entry) (o1)).getValue())).compareTo(((Map.Entry) (o2)).getValue());
 		  	}
 	  });
-	  
 	  return lista;
   }
   
