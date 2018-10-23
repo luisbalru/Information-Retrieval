@@ -22,6 +22,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lucene.analysis.de.GermanAnalyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.es.SpanishAnalyzer;
+import org.apache.lucene.analysis.fr.FrenchAnalyzer;
+import org.apache.lucene.analysis.it.ItalianAnalyzer;
+import org.apache.lucene.analysis.pt.PortugueseAnalyzer;
 import org.apache.tika.Tika;
 import org.apache.tika.detect.AutoDetectReader;
 import org.apache.tika.exception.TikaException;
@@ -32,11 +38,11 @@ import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.apache.tika.sax.Link;
 import org.apache.tika.sax.LinkContentHandler;
-import org.xml.sax.SAXException;
 import org.apache.tika.langdetect.OptimaizeLangDetector;
 import org.apache.tika.language.detect.LanguageDetector;
 import org.apache.tika.language.detect.LanguageResult;
 import org.apache.tika.sax.TeeContentHandler;
+import org.xml.sax.SAXException;
 
 public class Fichero{
   String name;
@@ -45,7 +51,6 @@ public class Fichero{
   String type;
   String charset;
   String content;
-  List<Link> links;
   static ArrayList<HashMap<String,Integer>> word_count;
   ArrayList<List> lista;
   String directorio;
@@ -58,14 +63,16 @@ public class Fichero{
     charset = setCharset(f,tika);
     metadata = new ArrayList<String>();
     lista = new ArrayList<List>();
-    links = new ArrayList<Link>();
-    word_count = new ArrayList<HashMap<String, Integer>>();
+    word_count = new ArrayList<HashMap<String, Integer> >();
+    for(int i=0; i<6; i++) {
+    	HashMap<String, Integer> aux = new HashMap<String,Integer>();
+    	word_count.add(aux);
+    }
 	getContent_Metadata(f);
 	cuentaPalabras();
     language = identifyLanguage(content);
     for(int i=0; i<word_count.size();i++)
     	lista.add(ordena(i));
-    
   }
 
   private String setCharset(File f, Tika tika) throws FileNotFoundException{
@@ -97,7 +104,6 @@ public class Fichero{
     parser.parse(inputstream, teeHandler, met, context);
     inputstream.close();
     content = handler.toString();
-    links = link_handler.getLinks();
     String[] metadataNames = met.names();
     String aux;
     for(String name : metadataNames){
@@ -112,16 +118,36 @@ public class Fichero{
       
   }
 
-  private void cuentaPalabras() {/*
-	  String[] split = content.split("\\s");
-	  for(String st : split) {
-		  if(word_count.containsKey(st)) {
-			  int num = word_count.get(st) + 1;
-			  word_count.put(st, num);
+  private void cuentaPalabras() {
+	  int j = AnalyzerUtils.analizadores.length+1;
+	  for(int i=0; i<j; i++) {
+		  List<String> split;
+		  if(i==AnalyzerUtils.analizadores.length) {
+			  if(language == "es")
+				  split = AnalyzerUtils.tokenizeString(new SpanishAnalyzer(), content);
+			  else if(language == "en")
+				  split = AnalyzerUtils.tokenizeString(new EnglishAnalyzer(), content);
+			  else if(language == "pt")
+				  split = AnalyzerUtils.tokenizeString(new PortugueseAnalyzer(), content);
+			  else if(language == "fr")
+				  split = AnalyzerUtils.tokenizeString(new FrenchAnalyzer(), content);
+			  else if(language == "it")
+				  split = AnalyzerUtils.tokenizeString(new ItalianAnalyzer(), content);
+			  else
+				  split = AnalyzerUtils.tokenizeString(new GermanAnalyzer(), content);
 		  }
-		  else
-			  word_count.put(st, 0);
-	  }*/
+		  else 
+			  split = AnalyzerUtils.tokenizeString(AnalyzerUtils.analizadores[i], content);
+
+		  for(String st : split) {
+				  if(word_count.get(i).containsKey(st)) {
+					  int num = word_count.get(i).get(st) + 1;
+					  word_count.get(i).put(st, num);
+				  }
+				  else
+					  word_count.get(i).put(st, 1);
+		  }
+	  }
   }
   
   private static List ordena(int i) {
@@ -131,7 +157,6 @@ public class Fichero{
 		  		return ((Comparable) (((Map.Entry) (o1)).getValue())).compareTo(((Map.Entry) (o2)).getValue());
 		  	}
 	  });
-	  
 	  return lista;
   }
   
@@ -162,11 +187,5 @@ public class Fichero{
 
   public ArrayList<String> getMetadata(){
     return metadata;
-  }
-  
-  public List<Link> getLinks(){
-	  return links;
-  }
-  
-  
+  }  
 }
