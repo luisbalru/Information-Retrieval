@@ -25,7 +25,7 @@ public class JavaAnalyzer extends Analyzer{
 			"final", "float", "for", "if", "implements", "import","int", "interface",
 			"long", "native", "new", "package", "private", "protected", "public", "return",
 			"short", "static", "super", "switch", "this", "throw", "try", "void", "while", "String", "ArrayList",
-			"File");
+			"File", "Analyzer", "TokenStream", "SimpleAnalyzer", "WhitespaceAnalyzer", "ShingleFilter", "CharTermAttribute");
 	
 	public JavaAnalyzer() {
 		
@@ -35,6 +35,7 @@ public class JavaAnalyzer extends Analyzer{
 	protected TokenStreamComponents createComponents(String arg0) {
 		final Tokenizer source = new LetterDigitTokenizer();
 		TokenStream result = new StopFilter(source, new CharArraySet(stopwords,true));
+		result = new NumberFilter(result);
 		return new TokenStreamComponents(source,result);
 	}
 	
@@ -58,7 +59,7 @@ public class JavaAnalyzer extends Analyzer{
 	    return result;
 	  }
 	
-	  public static void main(String[] args) {
+	  /*public static void main(String[] args) {
 		  String s = "public ArrayList<String> getPaths(String dir){\n" + 
 		  		"     File file = null;\n" + 
 		  		"     ArrayList<String> paths = new ArrayList<String>();\n" + 
@@ -74,5 +75,5 @@ public class JavaAnalyzer extends Analyzer{
 		  for(String s1 : split) {
 			  System.out.println(s1);
 		  }
-	  }
+	  }*/
 }

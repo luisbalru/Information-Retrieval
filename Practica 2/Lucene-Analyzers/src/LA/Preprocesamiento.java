@@ -74,18 +74,40 @@ public class Preprocesamiento{
 	try {
 	    	Scanner sc = new Scanner(System.in);
 	    	System.out.println("**************************************");
-	    	System.out.println("Bienvenido al sistema de preprocesamiento de archivos");
-	    	System.out.println("Crearemos un directorio. ¿Cómo se llamará?");
-	    	String dir = sc.next();
-	    	File f = new File(dir);
-	    	f.mkdir();
-	    	System.out.println("Dame el nombre del archivo a estudiar");
-	    	String fi = sc.next();
-	    	Fichero fichero = new Fichero(fi);
-	    	ficheros.add(fichero);
-	    	ficheros.get(0).directorio = dir;
-	    	imprimeDatos(ficheros,false," ");
-	    	cuentaPalabras(ficheros);
+	    	System.out.println("Bienvenido al sistema de preprocesamiento de archivos. Introduzca 0 para libro, 1 para JavaAnalyzer");
+	    	String o = sc.next();
+	    	if(o=="0") {
+		    	System.out.println("Crearemos un directorio. ¿Cómo se llamará?");
+		    	String dir = sc.next();
+		    	File f = new File(dir);
+		    	f.mkdir();
+		    	System.out.println("Dame el nombre del archivo a estudiar");
+		    	String fi = sc.next();
+		    	Fichero fichero = new Fichero(fi);
+		    	ficheros.add(fichero);
+		    	ficheros.get(0).directorio = dir;
+		    	imprimeDatos(ficheros,false," ");
+		    	cuentaPalabras(ficheros);
+	    	}
+	    	else {
+	    		System.out.println("Crearemos un directorio. ¿Cómo se llamará?");
+		    	String dir = sc.next();
+		    	File f = new File(dir);
+		    	f.mkdir();
+		    	System.out.println("Dame el nombre del Java");
+		    	String fi = sc.next();
+		    	FicheroJava fichero = new FicheroJava(fi);
+		    	ficheros.add(fichero);
+		    	ficheros.get(0).directorio = dir;
+		    	//imprimeDatos(ficheros,false," ");
+		    	List<String> split = JavaAnalyzer.tokenizeString(new JavaAnalyzer(), ficheros.get(0).getContent());
+		    	PrintWriter writer;
+		    	writer = new PrintWriter(dir+"/java_index.txt", "UTF-8");
+		    	for(String s1 : split) {
+					  writer.println(s1);
+				  }
+		    	writer.close();
+	    	}
     }
 	catch (Exception e)
     {
