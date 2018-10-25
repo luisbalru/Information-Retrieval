@@ -1,7 +1,3 @@
----
-header-includes:
- - \usepackage{float}
----
 
 ESTUDIO ESTADÍSTICO SOBRE DISTINTOS ANALIZADORES TEXTUALES LUCENE 
 ==========================================
@@ -9,14 +5,9 @@ ESTUDIO ESTADÍSTICO SOBRE DISTINTOS ANALIZADORES TEXTUALES LUCENE
 Recuperación de Información. Práctica 2. Luis Balderas Ruiz
 -----------------------------------------------------------------------------
 
-\par
-\noindent\rule{\textwidth}{0.8pt}
 
 Introducción
 ------------
-
-\par
-\noindent\rule{\textwidth}{0.4pt}
 
 En esta práctica utilizamos analizadores del producto software Lucene para estudiar el tratamiento que se realiza sobre distintos textos. En mi caso, he tomado seis libros, cada uno en un idioma distinto, del [Proyecto Gutenberg](https://www.gutenberg.org/) que son los siguientes:
 
@@ -33,9 +24,6 @@ Para cada texto seleccionaré ciertos tokens para comparar sus frecuencias dadas
 
 Resultados del análisis
 --------------------------------
-
-\par
-\noindent\rule{\textwidth}{0.4pt}
 
 En primer lugar, observo que las lenguas romances están tratadas de una manera similar, haciendo especial mención en el tratamiento de tildes. Por eso, sólo reflejo los cinco de los seis libros. 
 
