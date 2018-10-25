@@ -34,8 +34,7 @@ public class JavaAnalyzer extends Analyzer{
 	@Override
 	protected TokenStreamComponents createComponents(String arg0) {
 		final Tokenizer source = new LetterDigitTokenizer();
-		TokenStream result = new LowerCaseFilter(source);
-		result = new StopFilter(result, new CharArraySet(stopwords,true));
+		TokenStream result = new StopFilter(source, new CharArraySet(stopwords,true));
 		return new TokenStreamComponents(source,result);
 	}
 	
