@@ -35,7 +35,8 @@ public class JavaAnalyzer extends Analyzer{
 	protected TokenStreamComponents createComponents(String arg0) {
 		final Tokenizer source = new LetterDigitTokenizer();
 		TokenStream result = new StopFilter(source, new CharArraySet(stopwords,true));
-		result = new NumberFilter(result);
+		// por si no se quisiera coger los números fuera de nombres:
+		//result = new NumberFilter(result);
 		return new TokenStreamComponents(source,result);
 	}
 	
