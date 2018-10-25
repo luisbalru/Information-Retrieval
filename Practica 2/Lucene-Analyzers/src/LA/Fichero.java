@@ -54,6 +54,8 @@ public class Fichero{
   static ArrayList<HashMap<String,Integer>> word_count;
   ArrayList<List> lista;
   String directorio;
+  
+  public Fichero() {}
 
   public Fichero(String path) throws IOException, SAXException, TikaException{
     Tika tika = new Tika();
@@ -92,7 +94,7 @@ public class Fichero{
   }
 
 
-  private void getContent_Metadata(File f) throws IOException, SAXException, TikaException{
+  public void getContent_Metadata(File f) throws IOException, SAXException, TikaException{
 	  // Elimina el límite de contenido
 	FileInputStream inputstream = new FileInputStream(f);
 	Parser parser = new AutoDetectParser();
@@ -118,7 +120,7 @@ public class Fichero{
       
   }
 
-  private void cuentaPalabras() {
+  public void cuentaPalabras() {
 	  int j = AnalyzerUtils.analizadores.length+1;
 	  for(int i=0; i<j; i++) {
 		  List<String> split;
@@ -150,7 +152,7 @@ public class Fichero{
 	  }
   }
   
-  private static List ordena(int i) {
+  public static List ordena(int i) {
 	  List lista = new LinkedList(word_count.get(i).entrySet());
 	  Collections.sort(lista, new Comparator() {
 		  	public int compare(Object o1, Object o2) {
