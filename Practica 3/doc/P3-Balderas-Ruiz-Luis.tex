@@ -1,0 +1,138 @@
+\input{preambuloSimple.tex}
+\graphicspath{ {./images/} }
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{soul}
+
+%----------------------------------------------------------------------------------------
+%	TÍTULO Y DATOS DEL ALUMNO
+%----------------------------------------------------------------------------------------
+
+\title{	
+\normalfont \normalsize 
+\textsc{\textbf{Recuperación de Información (2018-2019)} \\ Doble Grado en Ingeniería Informática y Matemáticas \\ Universidad de Granada} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Memoria Práctica 3: \\Implementación de un Sistema de
+Recuperación de Información utilizando
+Lucene \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Luis Balderas Ruiz \\ \texttt{luisbalderas@correo.ugr.es}} 
+ % Nombre y apellidos 
+
+
+\date{\normalsize\today} % Incluye la fecha actual
+
+%----------------------------------------------------------------------------------------
+% DOCUMENTO
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Muestra el Título
+
+\newpage %inserta un salto de página
+
+\tableofcontents % para generar el índice de contenidos
+
+\newpage
+
+\section{Introducción}
+
+El objetivo de esta práctica es diseñar un Sistema de Recuperación de Información utilizando la biblioteca Lucene. Más concretamente, crearé un buscador sobre un conjunto de preguntas y respuestas sobre el lenguaje de programación R. En total, podemos encontrar más de 85000 preguntas y 82000 respuestas que conformarán nuestra base de datos documental. Dicho sistema estará dividido en dos subsistemas que tendrán las siguientes funciones:
+
+\begin{itemize}
+	\item El primer subsistema será el encargado de recibir, procesar los datos y crear el índice.
+	\item El segundo, ideado para ser utilizado por el usuario, será una aplicación de escritorio sobre la que se pueda hacer consultas y mostrará los documentos relevantes
+\end{itemize}
+
+
+En el presente documento se expondrá el análisis de requisitos de ambos subsistemas y un manual de usuario para su uso. 
+
+\section{Análisis de Requisitos}
+
+\subsection{Subsistemas}
+
+Como acabo de comentar, dividiré el sistema en dos subsistemas de información independientes: Subsistema Central y RQuerySystem. A continuación, se describe la funcionalidad de cada uno de ellos.
+
+\subsubsection{Subsistema central}
+
+El subsistema central será únicamente utilizado por el administrador del sistema principal. Su cometido es recibir los datos y procesarlos según los criterios estudiados en las prácticas anteriores, de forma que se encuentren en perfectas condiciones para ser indexados y consultados posteriormente. 
+
+\subsubsection{RQuerySystem}
+
+Encarna la aplicación principal de sistema. Generado previamente el índice, permitirá consultas por parte de los usuarios y responderá a sus peticiones con los documentos más relevantes.
+
+\subsection{Requisitos funcionales}
+
+Expongo los distintos requisitos funcionales y los relaciono con los requisitos de datos.
+
+\subsubsection{Requisitos funcionales del subsistema central}
+
+\begin{itemize}
+	\item \textbf{RF 1:} Recibir los datos en formato CSV. Datos de entrada: RD 1.1.
+	\item \textbf{RF 2:} Procesar los datos utilizando distintos Analyzers de Lucene dependiendo del campo. Datos de entrada: RD 1.2. Datos de salida: RD 1.3.
+	\item \textbf{RF 3:} Crear el índice. Datos de entrada: RD 1.4.
+\end{itemize}
+
+\subsubsection{Requisitos funcionales de RQuerySystem}
+
+\begin{itemize}
+	\item \textbf{RF 1:} Recibir y procesar consultas de un usuario. Datos de entrada: RD 2.1
+	\item \textbf{RF 2:} Hacer búsqueda en el índice sobre los datos recibidos. Datos de entrada: RD 2.2. Salida: RD 2.3
+	\item \textbf{RF 3:} Mostrar los documentos relevantes a la consulta. Datos de salida: RD 2.4.
+\end{itemize}
+
+\subsection{Requisitos de datos}
+
+Expongo los distintos requisitos de datos.
+
+\subsubsection{Requisitos de datos del subsistema central}
+
+\begin{itemize}
+	\item \textbf{RD 1.1:} Questions.csv, Answers.csv, Tags.csv
+	\item \textbf{RD 1.2:} Mismos que en RD 1.1.
+	\item \textbf{RD 1.3:} Datos de RD 1.2 modificados mediante Analyzers y tokenizados.
+	\item \textbf{RD 1.4:} Mismos que en RD 1.4.
+\end{itemize}
+
+\subsubsection{Requisitos de datos de RQuerySystem}
+
+\begin{itemize}
+	\item \textbf{RD 2.1:} Texto en lenguaje natural (probablemente inglés) y números por parte del usuario.
+	\item \textbf{RD 2.2:} Mismos que en RD 2.1.
+	\item \textbf{RD 2.3:} Resultados de la búsqueda en el índice.
+	\item \textbf{RD 2.4:} Los mismos que en RD 2.3 presentados al usuario.
+\end{itemize}
+
+\subsection{Esquemas}
+
+\begin{figure}[H] %con el [H] le obligamos a situar aquí la figura
+	\centering
+	\includegraphics[scale=0.5]{caja-negra.png}  %el parámetro scale permite agrandar o achicar la imagen. En el nombre de archivo puede especificar directorios
+	\caption{Esquema de caja negra del sistema} 
+\end{figure}
+
+\begin{figure}[H] %con el [H] le obligamos a situar aquí la figura
+	\centering
+	\includegraphics[scale=0.5]{armazon.png}  %el parámetro scale permite agrandar o achicar la imagen. En el nombre de archivo puede especificar directorios
+	\caption{Esquema de f-armazón del sistema} 
+\end{figure}
+
+\begin{figure}[H] %con el [H] le obligamos a situar aquí la figura
+	\centering
+	\includegraphics[scale=0.5]{c-fd.png}  %el parámetro scale permite agrandar o achicar la imagen. En el nombre de archivo puede especificar directorios
+	\caption{Flujo de datos del subsistema central} 
+\end{figure}
+
+\begin{figure}[H] %con el [H] le obligamos a situar aquí la figura
+	\centering
+	\includegraphics[scale=0.5]{r-fd.png}  %el parámetro scale permite agrandar o achicar la imagen. En el nombre de archivo puede especificar directorios
+	\caption{Flujo de datos RQuerySystem} 
+\end{figure}
+
+\newpage
+\section{Manual de usuario}
+
+\end{document}
