@@ -12,3 +12,6 @@ Repositorio dedicado a las prácticas de la asignatura Recuperación de informac
 
 ### Práctica 2
 - Preprocesamiento de documentos. Análisis del texto con LUCENE
+
+### Práctica 3
+- Desarrollo de un Sistema de Recuperación de Información completo
