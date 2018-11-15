@@ -16,9 +16,7 @@ public class Query {
 	private String rate;
 	private String title;
 	private String body;
-	List<String> codes;
-	List<String> title_token;
-	List<String> body_token;
+	private List<String> codes;
 	
 	public Query(String ID, String IDu,String fecha,String punt,String titulo,String cuerpo) {
 		setID_q(ID);
@@ -26,10 +24,8 @@ public class Query {
 		setDate(fecha);
 		setRate(punt);
 		setTitle(titulo);
-		setBody(cuerpo);
 		codes = new ArrayList<String>();
-		title_token = tokenizeTitle();
-		body_token = tokenizeBody();
+		tokenizeCodesBody();
 	}
 
 	public String getID_q() {
@@ -63,7 +59,7 @@ public class Query {
 	private void setTitle(String title) {
 		this.title = title;
 	}
-
+	
 	public String getRate() {
 		return rate;
 	}
@@ -80,21 +76,27 @@ public class Query {
 		this.body = body;
 	}
 	
+	public String getCodes() {
+		String aux = "";
+		for(String c : codes) {
+			aux = aux + c;
+		}
+		return aux;
+	}
+	
 	public List<String> tokenizeTitle() {
 		List<String> tokens = new ArrayList<String>();
 		tokens = AnalyzerUtils.tokenizeString(new StandardAnalyzer(), title);
 		return tokens;
 	}
 	
-	public List<String> tokenizeBody(){
-		List<String> tokens = new ArrayList<String>();
+	public void tokenizeCodesBody(){
 		Document doc = Jsoup.parse(body);
 		Elements cods = doc.getElementsByTag("code");
 		for (Element code : cods) {
 			codes.add(code.text());
 		}
-		tokens = AnalyzerUtils.tokenizeString(new StandardAnalyzer(), doc.body().text());
-		return tokens;
+		body = doc.body().text();
 	}
 	
 	
