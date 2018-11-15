@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class SubsistemaCentral {
@@ -11,7 +12,26 @@ public class SubsistemaCentral {
 	private ArrayList<Answer> answers;
 	private ArrayList<Tag> tags;
 	
+	public SubsistemaCentral(String pathq, String pathans, String pathtags) {
+		queries = new ArrayList<Query>();
+		answers = new ArrayList<Answer>();
+		tags = new ArrayList<Tag>();
+		leerCSV(pathq,true,false,false);
+		leerCSV(pathans,false,true,false);
+		leerCSV(pathtags,false,false,true);
+	}
 	
+	public void crearIndQ(String path) throws IOException, ParseException {
+		QueryIndex index_queries = new QueryIndex(queries,path);
+	}
+	
+	public void crearIndA(String path) throws IOException, ParseException {
+		AnswerIndex index_ans = new AnswerIndex(answers,path);
+	}
+	
+	public void crearIndT(String path) throws IOException, ParseException {
+		TagIndex index_tag = new TagIndex(tags,path);
+	}
 	
 	public void leerCSV(String path, boolean q, boolean a, boolean t) {
 		BufferedReader br = null;
