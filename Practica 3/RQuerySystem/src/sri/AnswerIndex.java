@@ -16,12 +16,13 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.LongPoint;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 
 public class AnswerIndex extends Index {
-	public AnswerIndex(ArrayList<Query> queries, String path) throws IOException, ParseException {
+	public AnswerIndex(ArrayList<Answer> answers, String path) throws IOException, ParseException {
 		Map<String, Analyzer> analyzerPerField = new HashMap<>();
 		analyzerPerField.put("body", new StandardAnalyzer());
 		analyzerPerField.put("code", new WhitespaceAnalyzer());
@@ -30,19 +31,20 @@ public class AnswerIndex extends Index {
 																		analyzerPerField);
 		Similarity similarity = new ClassicSimilarity();
 		setupIndex(aWrapper, similarity, path);
-		indexDoc(queries);
+		indexDoc(answers);
 		close();
 	}
 	
-	public void indexDoc(ArrayList<Query> queries) throws ParseException, IOException {
-		for(Query q : queries) {
+	public void indexDoc(ArrayList<Answer> answers) throws ParseException, IOException {
+		for(Answer q : answers) {
 			Document doc = new Document();
+			doc.add(new IntPoint("ID-a", Integer.parseInt(q.getID_a())));
 			doc.add(new IntPoint("ID-q",Integer.parseInt(q.getID_q())));
 			doc.add(new IntPoint("ID-user", Integer.parseInt(q.getID_user())));
 			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(q.getDate());
 			doc.add(new LongPoint("date",date.getTime()));
-			doc.add(new IntPoint("rate", Integer.parseInt(q.getRate())));
-			doc.add(new TextField("title",q.getTitle(), Field.Store.YES));
+			doc.add(new IntPoint("puntuacion", Integer.parseInt(q.getPuntuacion())));
+			doc.add(new StringField("aceptada", q.getAceptada(), Field.Store.YES));
 			doc.add(new TextField("body",q.getBody(), Field.Store.YES));
 			doc.add(new TextField("codes", q.getCodes(),Field.Store.YES));
 			
