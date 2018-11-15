@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class SubsistemaCentral {
 	private ArrayList<Query> queries;
@@ -76,6 +77,10 @@ public class SubsistemaCentral {
 		        }
 		    }
 		}
+	}
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
 	}
 	
 }
