@@ -22,7 +22,7 @@ import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 
 public class AnswerIndex extends Index {
-	public AnswerIndex(ArrayList<Answer> answers, String path) throws IOException, ParseException {
+	public AnswerIndex(String path) throws IOException, ParseException {
 		Map<String, Analyzer> analyzerPerField = new HashMap<>();
 		analyzerPerField.put("body", new StandardAnalyzer());
 		analyzerPerField.put("code", new WhitespaceAnalyzer());
@@ -31,12 +31,9 @@ public class AnswerIndex extends Index {
 																		analyzerPerField);
 		Similarity similarity = new ClassicSimilarity();
 		setupIndex(aWrapper, similarity, path);
-		indexDoc(answers);
-		close();
 	}
 	
-	public void indexDoc(ArrayList<Answer> answers) throws ParseException, IOException {
-		for(Answer q : answers) {
+	public void indexDoc(Answer q) throws ParseException, IOException {
 			Document doc = new Document();
 			doc.add(new IntPoint("ID-a", Integer.parseInt(q.getID_a())));
 			doc.add(new IntPoint("ID-q",Integer.parseInt(q.getID_q())));
@@ -49,6 +46,5 @@ public class AnswerIndex extends Index {
 			doc.add(new TextField("codes", q.getCodes(),Field.Store.YES));
 			
 			writer.addDocument(doc);
-		}
 	}
 }
