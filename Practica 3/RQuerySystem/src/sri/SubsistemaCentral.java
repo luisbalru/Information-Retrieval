@@ -67,14 +67,12 @@ public class SubsistemaCentral {
 	}
 
 	private List<String[]> leeCSVQuery(String path) throws IOException{
-		System.out.println("entro2");
 		List<String[]> lista_def = new LinkedList<String[]>();
 		BufferedReader br = new BufferedReader(new FileReader(path));
 		String line;
 		String complete_line = "";
 		while((line = br.readLine()) != null) {
 			if(line.equals('\"')) {
-				System.out.println("fin");
 				String[] aux = line.split(",");
 				String[] def = new String[6];
 				def[0] = aux[0];
