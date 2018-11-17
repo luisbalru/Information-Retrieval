@@ -16,21 +16,22 @@ public class SubsistemaCentral {
 	TagIndex index_tags;
 	
 	public SubsistemaCentral(String pathq, String pathans, String pathtags) throws IOException, ParseException {
-		//leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/prueba.csv",false,false,false);
 		crearIndQ(pathq);
 		crearIndA(pathans);
 	}
 	
 	public void crearIndQ(String path) throws IOException, ParseException {
 		index_queries = new QueryIndex(path);
-		leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Questions.csv",true,false,false);
+	 	leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Questions.csv",true,false,false);
 		index_queries.close();
+		System.out.println("q");
 	}
 	
 	public void crearIndA(String path) throws IOException, ParseException {
 		index_answers = new AnswerIndex(path);
-		leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Answers.csv",false,true,false);
+	//	leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Answers.csv",false,true,false);
 		index_answers.close();
+		System.out.println("answer");
 	}
 	
 	/*public void crearIndT(String path) throws IOException, ParseException {
@@ -40,17 +41,15 @@ public class SubsistemaCentral {
 	}*/
 	
 	public void leerCSV(String path, boolean q, boolean a, boolean t) throws IOException, ParseException {
-		ArrayList<Query> qu = new ArrayList<Query>();
-		ArrayList<Answer> an = new ArrayList<Answer>();
-		ArrayList<Tag> ta = new ArrayList<Tag>();
-				List<String[]> datos = new LinkedList<String[]>();
+		System.out.println("entro");
+		List<String[]> datos = new LinkedList<String[]>();
 				if(q){
 					datos = leeCSVQuery(path);
 					for(String[] d : datos) {
 						Query pregunta = new Query(d[0],d[1],d[2],d[3],d[4],d[5]);
 						index_queries.indexDoc(pregunta);
+						System.out.println("a");
 					}
-					index_queries.close();
 				}
 				else if(a) {
 					datos = leeCSVAnswer(path);
@@ -58,7 +57,6 @@ public class SubsistemaCentral {
 						Answer respuesta = new Answer(d[0],d[1],d[2],d[3],d[4],d[5],d[6]);
 						index_answers.indexDoc(respuesta);
 					}
-					index_answers.close();
 				}
 				/*else {
 					/*datos = leeCSVTag(path);
@@ -69,12 +67,14 @@ public class SubsistemaCentral {
 	}
 
 	private List<String[]> leeCSVQuery(String path) throws IOException{
+		System.out.println("entro2");
 		List<String[]> lista_def = new LinkedList<String[]>();
 		BufferedReader br = new BufferedReader(new FileReader(path));
 		String line;
 		String complete_line = "";
 		while((line = br.readLine()) != null) {
 			if(line.equals('\"')) {
+				System.out.println("fin");
 				String[] aux = line.split(",");
 				String[] def = new String[6];
 				def[0] = aux[0];
@@ -89,9 +89,11 @@ public class SubsistemaCentral {
 				def[5] = auxiliar;
 				lista_def.add(def);
 			}
-			else
+			else {
 				complete_line = complete_line + line;
+			}
 		}
+		br.close();
 		return lista_def;
 	}
 	
@@ -120,16 +122,17 @@ public class SubsistemaCentral {
 			else
 				complete_line = complete_line + line;
 		}
+		br.close();
 		return lista_def;
 	}
 	
 	public static void main(String[] args) throws IOException, ParseException {
-		Scanner sc = new Scanner(System.in);
+		/*Scanner sc = new Scanner(System.in);
 		System.out.println("Dime el directorio donde crear el índice de queries");
 		String path_query = sc.next();
 		System.out.println("Dime el directorio donde guardar el índice de answers");
-		String path_answer = sc.next();
-		SubsistemaCentral scentral = new SubsistemaCentral(path_query,path_answer,"");
+		String path_answer = sc.next();*/
+		SubsistemaCentral scentral = new SubsistemaCentral("/home/luisbalru/Universidad/RI/Indices/Queries","/home/luisbalru/Universidad/RI/Indices/Answers","");
 	}
 	
 }
