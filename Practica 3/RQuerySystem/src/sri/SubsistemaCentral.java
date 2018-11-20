@@ -17,7 +17,7 @@ public class SubsistemaCentral {
 	
 	public SubsistemaCentral(String pathq, String pathans, String pathtags) throws IOException, ParseException {
 		crearIndQ(pathq);
-		//crearIndA(pathans);
+		crearIndA(pathans);
 	}
 	
 	public void crearIndQ(String path) throws IOException, ParseException {
@@ -43,12 +43,6 @@ public class SubsistemaCentral {
 				if(q){
 					datos = leeCSVQuery(path);
 					for(String[] d : datos) {
-						/*System.out.println(d[0]);
-						System.out.println(d[1]);
-						System.out.println(d[2]);
-						System.out.println(d[3]);
-						System.out.println(d[4]);
-						System.out.println(d[5]);*/
 						Query pregunta = new Query(d[0],d[1],d[2],d[3],d[4],d[5]);
 						index_queries.indexDoc(pregunta);
 					}
@@ -119,6 +113,7 @@ public class SubsistemaCentral {
 					auxiliar = auxiliar + aux[i];
 				}
 				def[6] = auxiliar;
+				complete_line = "";
 				lista_def.add(def);
 			}
 			else

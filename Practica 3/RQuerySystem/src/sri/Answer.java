@@ -28,6 +28,7 @@ public class Answer {
 		setDate(fecha);
 		setPuntuacion(punt);
 		setAceptada(acept);
+		setBody(cuerpo);
 		codes = new ArrayList<String>();
 		tokenizeCodesBody();
 	}

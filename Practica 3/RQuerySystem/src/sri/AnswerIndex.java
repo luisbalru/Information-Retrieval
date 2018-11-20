@@ -38,8 +38,8 @@ public class AnswerIndex extends Index {
 			doc.add(new StringField("ID-a", q.getID_a(),Field.Store.YES));
 			doc.add(new StringField("ID-q",q.getID_q(),Field.Store.YES));
 			doc.add(new StringField("ID-user", q.getID_user(), Field.Store.YES));
-			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(q.getDate());
-			doc.add(new LongPoint("date",date.getTime()));
+			//Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(q.getDate());
+			doc.add(new StringField("date",q.getDate(),Field.Store.NO));
 			doc.add(new StringField("puntuacion", q.getPuntuacion(),Field.Store.YES));
 			doc.add(new StringField("aceptada", q.getAceptada(), Field.Store.YES));
 			doc.add(new TextField("body",q.getBody(), Field.Store.YES));
