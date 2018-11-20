@@ -24,6 +24,7 @@ public class Query {
 		setDate(fecha);
 		setRate(punt);
 		setTitle(titulo);
+		setBody(cuerpo);
 		codes = new ArrayList<String>();
 		tokenizeCodesBody();
 	}

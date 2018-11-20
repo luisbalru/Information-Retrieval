@@ -38,10 +38,9 @@ public class QueryIndex extends Index {
 		Document doc = new Document();
 		doc.add(new IntPoint("ID-q",Integer.parseInt(q.getID_q())));
 		doc.add(new StringField("ID-q", q.getID_q(), Field.Store.YES));
-		doc.add(new IntPoint("ID-user", Integer.parseInt(q.getID_user())));
+		doc.add(new StringField("ID-user", q.getID_user(),Field.Store.YES));
 		Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(q.getDate());
 		doc.add(new LongPoint("date",date.getTime()));
-		doc.add(new IntPoint("rate", Integer.parseInt(q.getRate())));
 		doc.add(new StringField("rate", q.getRate(), Field.Store.YES));
 		doc.add(new TextField("title",q.getTitle(), Field.Store.YES));
 		doc.add(new TextField("body",q.getBody(), Field.Store.YES));

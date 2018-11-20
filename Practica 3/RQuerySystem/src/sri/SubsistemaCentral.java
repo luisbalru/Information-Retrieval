@@ -17,21 +17,19 @@ public class SubsistemaCentral {
 	
 	public SubsistemaCentral(String pathq, String pathans, String pathtags) throws IOException, ParseException {
 		crearIndQ(pathq);
-		crearIndA(pathans);
+		//crearIndA(pathans);
 	}
 	
 	public void crearIndQ(String path) throws IOException, ParseException {
 		index_queries = new QueryIndex(path);
 	 	leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Questions.csv",true,false,false);
 		index_queries.close();
-		System.out.println("q");
 	}
 	
 	public void crearIndA(String path) throws IOException, ParseException {
 		index_answers = new AnswerIndex(path);
-	//	leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Answers.csv",false,true,false);
+		leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Answers.csv",false,true,false);
 		index_answers.close();
-		System.out.println("answer");
 	}
 	
 	/*public void crearIndT(String path) throws IOException, ParseException {
@@ -41,14 +39,18 @@ public class SubsistemaCentral {
 	}*/
 	
 	public void leerCSV(String path, boolean q, boolean a, boolean t) throws IOException, ParseException {
-		System.out.println("entro");
 		List<String[]> datos = new LinkedList<String[]>();
 				if(q){
 					datos = leeCSVQuery(path);
 					for(String[] d : datos) {
+						/*System.out.println(d[0]);
+						System.out.println(d[1]);
+						System.out.println(d[2]);
+						System.out.println(d[3]);
+						System.out.println(d[4]);
+						System.out.println(d[5]);*/
 						Query pregunta = new Query(d[0],d[1],d[2],d[3],d[4],d[5]);
 						index_queries.indexDoc(pregunta);
-						System.out.println("a");
 					}
 				}
 				else if(a) {
@@ -72,8 +74,9 @@ public class SubsistemaCentral {
 		String line;
 		String complete_line = "";
 		while((line = br.readLine()) != null) {
-			if(line.equals('\"')) {
-				String[] aux = line.split(",");
+			//System.out.println(line);
+			if(line.equals("\"")) {
+				String[] aux = complete_line.split(",");
 				String[] def = new String[6];
 				def[0] = aux[0];
 				def[1] = aux[1];
@@ -85,6 +88,7 @@ public class SubsistemaCentral {
 					auxiliar = auxiliar + aux[i];
 				}
 				def[5] = auxiliar;
+				complete_line="";
 				lista_def.add(def);
 			}
 			else {
@@ -101,8 +105,8 @@ public class SubsistemaCentral {
 		String line;
 		String complete_line = "";
 		while((line = br.readLine()) != null) {
-			if(line.equals('\"')) {
-				String[] aux = line.split(",");
+			if(line.equals("\"")) {
+				String[] aux = complete_line.split(",");
 				String[] def = new String[7];
 				def[0] = aux[0];
 				def[1] = aux[1];
@@ -131,6 +135,7 @@ public class SubsistemaCentral {
 		System.out.println("Dime el directorio donde guardar el índice de answers");
 		String path_answer = sc.next();*/
 		SubsistemaCentral scentral = new SubsistemaCentral("/home/luisbalru/Universidad/RI/Indices/Queries","/home/luisbalru/Universidad/RI/Indices/Answers","");
+		System.out.println("Índices creados satisfactoriamente");
 	}
 	
 }

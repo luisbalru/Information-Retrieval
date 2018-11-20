@@ -9,6 +9,7 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.search.similarities.Similarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.codecs.lucene70.Lucene70Codec;
 
 public class Index {
 	protected IndexWriter writer;
@@ -17,6 +18,7 @@ public class Index {
 							String path) throws IOException{
 		
 		IndexWriterConfig iwc = new IndexWriterConfig(aWrapper);
+		iwc.setCodec(new Lucene70Codec());
 		iwc.setSimilarity(similarity);
 		iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
 		
