@@ -7,8 +7,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/home/luisbalru/Descargas/Telegram Desktop/jsoup-1.11.3.jar"/>
-	<classpathentry kind="lib" path="/home/luisbalru/Descargas/Telegram Desktop/lucene-analyzers-common-7.5.0.jar"/>
-	<classpathentry kind="lib" path="/home/luisbalru/Descargas/Telegram Desktop/lucene-core-7.5.0.jar"/>
-	<classpathentry kind="lib" path="/home/luisbalru/Descargas/Telegram Desktop/lucene-queryparser-7.5.0.jar"/>
+	<classpathentry kind="lib" path="/home/luisbalru/Descargas/Instaladores/lucene-7.1.0/analysis/common/lucene-analyzers-common-7.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/luisbalru/Descargas/Instaladores/lucene-7.1.0/core/lucene-core-7.1.0.jar"/>
+	<classpathentry kind="lib" path="/home/luisbalru/Descargas/Instaladores/lucene-7.1.0/queryparser/lucene-queryparser-7.1.0.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
