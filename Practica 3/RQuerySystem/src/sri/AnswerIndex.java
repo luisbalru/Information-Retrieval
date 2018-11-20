@@ -35,12 +35,12 @@ public class AnswerIndex extends Index {
 	
 	public void indexDoc(Answer q) throws ParseException, IOException {
 			Document doc = new Document();
-			doc.add(new IntPoint("ID-a", Integer.parseInt(q.getID_a())));
-			doc.add(new IntPoint("ID-q",Integer.parseInt(q.getID_q())));
-			doc.add(new IntPoint("ID-user", Integer.parseInt(q.getID_user())));
+			doc.add(new StringField("ID-a", q.getID_a(),Field.Store.YES));
+			doc.add(new StringField("ID-q",q.getID_q(),Field.Store.YES));
+			doc.add(new StringField("ID-user", q.getID_user(), Field.Store.YES));
 			Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(q.getDate());
 			doc.add(new LongPoint("date",date.getTime()));
-			doc.add(new IntPoint("puntuacion", Integer.parseInt(q.getPuntuacion())));
+			doc.add(new StringField("puntuacion", q.getPuntuacion(),Field.Store.YES));
 			doc.add(new StringField("aceptada", q.getAceptada(), Field.Store.YES));
 			doc.add(new TextField("body",q.getBody(), Field.Store.YES));
 			doc.add(new TextField("codes", q.getCodes(),Field.Store.YES));
