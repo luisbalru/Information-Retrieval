@@ -17,7 +17,11 @@ public class SubsistemaCentral {
 	
 	public SubsistemaCentral(String pathq, String pathans, String pathtags) throws IOException, ParseException {
 		crearIndQ(pathq);
+		System.out.println("Creado índice de preguntas");
 		crearIndA(pathans);
+		System.out.println("Creado índice de respuestas");
+		crearIndT(pathtags);
+		System.out.println("Creado índice de tags");
 	}
 	
 	public void crearIndQ(String path) throws IOException, ParseException {
@@ -32,11 +36,11 @@ public class SubsistemaCentral {
 		index_answers.close();
 	}
 	
-	/*public void crearIndT(String path) throws IOException, ParseException {
-		leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Tags.csv",false,false,true);
+	public void crearIndT(String path) throws IOException, ParseException {
 		index_tags = new TagIndex(path);
+		leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Tags.csv",false,false,true);
 		index_tags.close();
-	}*/
+	}
 	
 	public void leerCSV(String path, boolean q, boolean a, boolean t) throws IOException, ParseException {
 		List<String[]> datos = new LinkedList<String[]>();
@@ -54,12 +58,13 @@ public class SubsistemaCentral {
 						index_answers.indexDoc(respuesta);
 					}
 				}
-				/*else {
-					/*datos = leeCSVTag(path);
+				else {
+					datos = leeCSVTag(path);
 					for(String[] d : datos) {
 						Tag etiq = new Tag(d[0],d[1]);
-						ta.add(etiq);
-					}*/
+						index_tags.indexDoc(etiq);
+					}
+				}
 	}
 
 	private List<String[]> leeCSVQuery(String path) throws IOException{
@@ -88,6 +93,21 @@ public class SubsistemaCentral {
 			else {
 				complete_line = complete_line + line;
 			}
+		}
+		br.close();
+		return lista_def;
+	}
+	
+	private List<String[]> leeCSVTag(String path) throws IOException{
+		List<String[]> lista_def = new LinkedList<String[]>();
+		BufferedReader br = new BufferedReader(new FileReader(path));
+		String line;
+		while((line = br.readLine()) != null) {
+			String[] aux = line.split(",");
+			String[] def = new String[2];
+			def[0] = aux[0];
+			def[1] = aux[1];
+			lista_def.add(def);
 		}
 		br.close();
 		return lista_def;
@@ -129,7 +149,7 @@ public class SubsistemaCentral {
 		String path_query = sc.next();
 		System.out.println("Dime el directorio donde guardar el índice de answers");
 		String path_answer = sc.next();*/
-		SubsistemaCentral scentral = new SubsistemaCentral("/home/luisbalru/Universidad/RI/Indices/Queries","/home/luisbalru/Universidad/RI/Indices/Answers","");
+		SubsistemaCentral scentral = new SubsistemaCentral("/home/luisbalru/Universidad/RI/Indices/Queries","/home/luisbalru/Universidad/RI/Indices/Answers","/home/luisbalru/Universidad/RI/Indices/Tags");
 		System.out.println("Índices creados satisfactoriamente");
 	}
 	

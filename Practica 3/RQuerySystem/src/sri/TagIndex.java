@@ -10,24 +10,22 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.StringField;
+import org.apache.lucene.document.TextField;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 
 public class TagIndex extends Index {
-	public TagIndex(ArrayList<Tag> tags, String path) throws IOException, ParseException {
+	public TagIndex(String path) throws IOException, ParseException {
 		PerFieldAnalyzerWrapper aWrapper = new PerFieldAnalyzerWrapper(new WhitespaceAnalyzer());
 		Similarity similarity = new ClassicSimilarity();
 		setupIndex(aWrapper, similarity, path);
-		indexDoc(tags);
-		close();
 	}
-	public void indexDoc(ArrayList<Tag> tags) throws ParseException, IOException {
-		for(Tag q : tags) {
-			Document doc = new Document();
-			doc.add(new IntPoint("ID-tag",Integer.parseInt(q.getID_q())));
-			doc.add(new StringField("tag",q.getSet_tags(),Field.Store.YES));
-			writer.addDocument(doc);
-		}
+	public void indexDoc(Tag t) throws ParseException, IOException {
+		Document doc = new Document();
+		doc.add(new StringField("ID", t.getID_q(),Field.Store.YES));
+		doc.add(new StringField("tag", t.getSet_tags(),Field.Store.YES));
+		
+		writer.addDocument(doc);
 	}
 	
 }

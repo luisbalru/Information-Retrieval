@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -24,7 +25,7 @@ import org.apache.lucene.search.similarities.Similarity;
 public class AnswerIndex extends Index {
 	public AnswerIndex(String path) throws IOException, ParseException {
 		Map<String, Analyzer> analyzerPerField = new HashMap<>();
-		analyzerPerField.put("body", new StandardAnalyzer());
+		analyzerPerField.put("body", new EnglishAnalyzer());
 		analyzerPerField.put("code", new WhitespaceAnalyzer());
 		
 		PerFieldAnalyzerWrapper aWrapper = new PerFieldAnalyzerWrapper(new StandardAnalyzer(), 
