@@ -11,13 +11,14 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 
 public class TagIndex extends Index {
 	public TagIndex(String path) throws IOException, ParseException {
 		PerFieldAnalyzerWrapper aWrapper = new PerFieldAnalyzerWrapper(new WhitespaceAnalyzer());
-		Similarity similarity = new ClassicSimilarity();
+		Similarity similarity = new BM25Similarity();
 		setupIndex(aWrapper, similarity, path);
 	}
 	public void indexDoc(Tag t) throws ParseException, IOException {

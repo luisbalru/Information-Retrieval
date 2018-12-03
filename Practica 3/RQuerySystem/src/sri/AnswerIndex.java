@@ -19,6 +19,7 @@ import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.search.similarities.BM25Similarity;
 import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 
@@ -30,7 +31,7 @@ public class AnswerIndex extends Index {
 		
 		PerFieldAnalyzerWrapper aWrapper = new PerFieldAnalyzerWrapper(new StandardAnalyzer(), 
 																		analyzerPerField);
-		Similarity similarity = new ClassicSimilarity();
+		Similarity similarity = new BM25Similarity();
 		setupIndex(aWrapper, similarity, path);
 	}
 	
@@ -42,6 +43,7 @@ public class AnswerIndex extends Index {
 			//Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(q.getDate());
 			doc.add(new StringField("date",q.getDate(),Field.Store.NO));
 			doc.add(new StringField("puntuacion", q.getPuntuacion(),Field.Store.YES));
+			doc.add(new LongPoint("punt-num",Integer.parseInt(q.getPuntuacion())));
 			doc.add(new StringField("aceptada", q.getAceptada(), Field.Store.YES));
 			doc.add(new TextField("body",q.getBody(), Field.Store.YES));
 			doc.add(new TextField("codes", q.getCodes(),Field.Store.YES));
