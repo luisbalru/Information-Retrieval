@@ -1,4 +1,4 @@
-package sri;
+package definitivo;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -16,10 +16,10 @@ import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 
 public class TagIndex extends Index {
-	public TagIndex(String path) throws IOException, ParseException {
+	public TagIndex(String path,String taxopath) throws IOException, ParseException {
 		PerFieldAnalyzerWrapper aWrapper = new PerFieldAnalyzerWrapper(new WhitespaceAnalyzer());
 		Similarity similarity = new BM25Similarity();
-		setupIndex(aWrapper, similarity, path);
+		setupIndex(aWrapper, similarity, path,taxopath);
 	}
 	public void indexDoc(Tag t) throws ParseException, IOException {
 		Document doc = new Document();

@@ -1,4 +1,4 @@
-package sri;
+package definitivo;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;

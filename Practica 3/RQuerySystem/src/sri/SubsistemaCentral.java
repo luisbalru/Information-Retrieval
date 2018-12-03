@@ -1,4 +1,4 @@
-package sri;
+package definitivo;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -15,29 +15,30 @@ public class SubsistemaCentral {
 	AnswerIndex index_answers;
 	TagIndex index_tags;
 	
-	public SubsistemaCentral(String pathq, String pathans, String pathtags) throws IOException, ParseException {
-		crearIndQ(pathq);
+	public SubsistemaCentral(String pathq, String pathans, String pathtags, String taxoqpath, String taxoapath, String taxotpath) 
+			throws IOException, ParseException {
+		crearIndQ(pathq,taxoqpath);
 		System.out.println("Creado índice de preguntas");
-		crearIndA(pathans);
+		crearIndA(pathans,taxoapath);
 		System.out.println("Creado índice de respuestas");
-		crearIndT(pathtags);
+		crearIndT(pathtags,taxotpath);
 		System.out.println("Creado índice de tags");
 	}
 	
-	public void crearIndQ(String path) throws IOException, ParseException {
-		index_queries = new QueryIndex(path);
+	public void crearIndQ(String path,String taxopath) throws IOException, ParseException {
+		index_queries = new QueryIndex(path,taxopath);
 	 	leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Questions.csv",true,false,false);
 		index_queries.close();
 	}
 	
-	public void crearIndA(String path) throws IOException, ParseException {
-		index_answers = new AnswerIndex(path);
+	public void crearIndA(String path,String taxopath) throws IOException, ParseException {
+		index_answers = new AnswerIndex(path,taxopath);
 		leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Answers.csv",false,true,false);
 		index_answers.close();
 	}
 	
-	public void crearIndT(String path) throws IOException, ParseException {
-		index_tags = new TagIndex(path);
+	public void crearIndT(String path,String taxopath) throws IOException, ParseException {
+		index_tags = new TagIndex(path,taxopath);
 		leerCSV("/home/luisbalru/Universidad/RI/data/rquestions/Tags.csv",false,false,true);
 		index_tags.close();
 	}
@@ -149,7 +150,9 @@ public class SubsistemaCentral {
 		String path_query = sc.next();
 		System.out.println("Dime el directorio donde guardar el índice de answers");
 		String path_answer = sc.next();*/
-		SubsistemaCentral scentral = new SubsistemaCentral("/home/luisbalru/Universidad/RI/Indices/Queries","/home/luisbalru/Universidad/RI/Indices/Answers","/home/luisbalru/Universidad/RI/Indices/Tags");
+		SubsistemaCentral scentral = new SubsistemaCentral("/home/luisbalru/Universidad/RI/Indices/Queries","/home/luisbalru/Universidad/RI/Indices/Answers",
+				"/home/luisbalru/Universidad/RI/Indices/Tags","/home/luisbalru/Universidad/RI/Indices/TaxoQ", "/home/luisbalru/Universidad/RI/Indices/TaxoA",
+				"/home/luisbalru/Universidad/RI/Indices/TaxoT");
 		System.out.println("Índices creados satisfactoriamente");
 	}
 	
