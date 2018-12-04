@@ -2,9 +2,6 @@ package definitivo;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,14 +12,12 @@ import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.IntPoint;
-import org.apache.lucene.document.LongPoint;
+import org.apache.lucene.document.FloatPoint;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.facet.FacetField;
 import org.apache.lucene.facet.FacetsConfig;
 import org.apache.lucene.search.similarities.BM25Similarity;
-import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 
 public class AnswerIndex extends Index {
@@ -48,7 +43,7 @@ public class AnswerIndex extends Index {
 			//Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(q.getDate());
 			doc.add(new StringField("date",q.getDate(),Field.Store.NO));
 			doc.add(new StringField("puntuacion", q.getPuntuacion(),Field.Store.YES));
-			doc.add(new LongPoint("punt-num",Integer.parseInt(q.getPuntuacion())));
+			doc.add(new FloatPoint("punt-num",Float.parseFloat(q.getPuntuacion())));
 			doc.add(new FacetField("punt-num",q.getPuntuacion()));
 			doc.add(new StringField("aceptada", q.getAceptada(), Field.Store.YES));
 			doc.add(new FacetField("aceptada",q.getAceptada()));

@@ -3,7 +3,6 @@ package definitivo;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +14,7 @@ import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FloatPoint;
 import org.apache.lucene.document.IntPoint;
 import org.apache.lucene.document.LongPoint;
 import org.apache.lucene.document.StringField;
@@ -22,7 +22,6 @@ import org.apache.lucene.document.TextField;
 import org.apache.lucene.facet.FacetField;
 import org.apache.lucene.facet.FacetsConfig;
 import org.apache.lucene.search.similarities.BM25Similarity;
-import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.search.similarities.Similarity;
 
 public class QueryIndex extends Index {
@@ -49,7 +48,7 @@ public class QueryIndex extends Index {
 		Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(q.getDate());
 		doc.add(new LongPoint("date",date.getTime()));
 		doc.add(new StringField("rate", q.getRate(), Field.Store.YES));
-		doc.add(new LongPoint("rate-num", Integer.parseInt(q.getRate())));
+		doc.add(new FloatPoint("rate-num", Float.parseFloat(q.getRate())));
 		doc.add(new TextField("title",q.getTitle(), Field.Store.YES));
 		doc.add(new TextField("body",q.getBody(), Field.Store.YES));
 		doc.add(new TextField("codes", q.getCodes(),Field.Store.YES));
