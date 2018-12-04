@@ -40,7 +40,7 @@ public class Buscador {
 		Query q1 = new TermQuery(new Term("ID-q",idq));
 		Query q2 = new TermQuery(new Term("aceptada","TRUE"));
 		
-		SortField sf = new SortField("punt-num",SortField.Type.FLOAT,true);
+		SortField sf = new SortField("punt-num",SortField.Type.INT,true);
 		//sf.setMissingValue();
 		Sort orden = new Sort(sf);
 		
@@ -87,6 +87,9 @@ public class Buscador {
 			Document hitDoc = isearcher.doc(hits.scoreDocs[i].doc);
 			queries.add(hitDoc);
 			answers = SearchAnswers(hitDoc.getField("ID-q").stringValue());
+			for(int j=0; j<answers.size();j++) {
+				queries.addAll(answers);
+			}
 		}
 		ireader.close();
 		dir.close();

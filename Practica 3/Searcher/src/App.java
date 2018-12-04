@@ -16,7 +16,7 @@ public class App {
 		Boolean must = true;
 		Boolean should = false;
 		Boolean not = false;
-		int num_q = 1;
+		int num_q = 5;
 		ArrayList<Document> documentos = buscador.SearchQuery(q1, q2, f1, f2, must, should, not, num_q);
 		for(int i=0; i<documentos.size(); i++) {
 			System.out.println(documentos.get(i).toString());
