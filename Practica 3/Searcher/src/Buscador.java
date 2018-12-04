@@ -3,7 +3,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -66,10 +66,10 @@ public class Buscador {
 		Directory dir = FSDirectory.open(queries_path);
 		IndexReader ireader = DirectoryReader.open(dir);
 		IndexSearcher isearcher = new IndexSearcher(ireader);
-
-		QueryParser parser1 = new QueryParser(f1,new StandardAnalyzer());
+		
+		QueryParser parser1 = new QueryParser(f1,new EnglishAnalyzer());
 		Query query1 = parser1.parse(q1);
-		QueryParser parser2 = new QueryParser(f2,new StandardAnalyzer());
+		QueryParser parser2 = new QueryParser(f2,new EnglishAnalyzer());
 		Query query2 = parser2.parse(q2);
 		
 		BooleanQuery.Builder Cons = new BooleanQuery.Builder();
