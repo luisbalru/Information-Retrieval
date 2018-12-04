@@ -20,7 +20,7 @@ public class Answer {
 	private List<String> codes;
 
 
-	public Answer(String ID_res,String ID_us, String ID_p,String fecha,String punt,
+	public Answer(String ID_res,String ID_us, String fecha, String ID_p,String punt,
 			String acept,String cuerpo) {
 		setID_a(ID_res);
 		setID_user(ID_us);

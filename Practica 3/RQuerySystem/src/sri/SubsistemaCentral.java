@@ -14,11 +14,11 @@ public class SubsistemaCentral {
 	
 	public SubsistemaCentral(String pathq, String pathans, String pathtags, String taxoqpath, String taxoapath, String taxotpath) 
 			throws IOException, ParseException {
-		crearIndQ(pathq,taxoqpath);
+		//crearIndQ(pathq,taxoqpath);
 		System.out.println("Creado índice de preguntas");
 		crearIndA(pathans,taxoapath);
 		System.out.println("Creado índice de respuestas");
-		crearIndT(pathtags,taxotpath);
+		//crearIndT(pathtags,taxotpath);
 		System.out.println("Creado índice de tags");
 	}
 	
