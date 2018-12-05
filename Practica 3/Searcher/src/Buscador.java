@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.facet.FacetsCollector;
+import org.apache.lucene.facet.taxonomy.TaxonomyReader;
+import org.apache.lucene.facet.taxonomy.directory.DirectoryTaxonomyReader;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
@@ -25,10 +28,14 @@ import org.apache.lucene.store.FSDirectory;
 public class Buscador {
 	private Path queries_path;
 	private Path answers_path;
+	private Path tags_path;
+	private Path taxo_path;
 	
-	public Buscador(String q_path, String ans_path) {
+	public Buscador(String q_path, String ans_path,String tag_path, String t_path) {
 		queries_path = FileSystems.getDefault().getPath(q_path);
 		answers_path = FileSystems.getDefault().getPath(ans_path);
+		tags_path = FileSystems.getDefault().getPath(tag_path);
+		taxo_path = FileSystems.getDefault().getPath(t_path);
 	}
 	
 	public ArrayList<Document> SearchAnswers(String idq) throws IOException{
@@ -57,6 +64,42 @@ public class Buscador {
 		dir.close();
 		
 		return answers;
+	}
+	
+	public ArrayList<Document> SearchbyFacet(String q,int num_resultados) throws IOException{
+		ArrayList<Document> facets = new ArrayList<Document>();
+		Directory dir = FSDirectory.open(tags_path);
+		Directory taxo_dir = FSDirectory.open(taxo_path);
+		DirectoryReader indexReader = DirectoryReader.open(dir);
+		IndexSearcher searcher = new IndexSearcher(indexReader);
+		TaxonomyReader taxoReader = new DirectoryTaxonomyReader(taxo_dir);
+		FacetsCollector fc = new FacetsCollector();
+		Term t = new Term("tag",q);
+		Query qu = new TermQuery(t);
+		TopDocs tdc = FacetsCollector.search(searcher, qu, num_resultados, fc);
+		
+		
+		Directory dir1 = FSDirectory.open(queries_path);
+		DirectoryReader indexReader1 = DirectoryReader.open(dir1);
+		IndexSearcher searcher1 = new IndexSearcher(indexReader1);
+		
+		for(ScoreDoc sd : tdc.scoreDocs) {
+			Document d = searcher.doc(sd.doc);
+			Query new_q = new TermQuery(new Term("ID-q",d.get("ID")));
+			BooleanQuery.Builder cons = new BooleanQuery.Builder();
+			cons.add(new_q,BooleanClause.Occur.MUST);
+			BooleanQuery bq = cons.build();
+			TopDocs hits = searcher1.search(bq, 1);
+			Document hitDoc = searcher1.doc(hits.scoreDocs[0].doc);
+			facets.add(hitDoc);
+		}
+		
+		indexReader.close();
+		dir.close();
+		taxo_dir.close();
+		indexReader1.close();
+		dir1.close();
+		return facets;
 	}
 	
 	public ArrayList<Document> SearchQuery(String q1, String q2, String f1, 
