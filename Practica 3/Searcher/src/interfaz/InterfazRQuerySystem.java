@@ -1,4 +1,4 @@
-package src;
+package interfaz;
 
 import java.awt.BorderLayout;
 
