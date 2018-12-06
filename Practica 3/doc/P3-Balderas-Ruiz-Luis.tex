@@ -62,7 +62,14 @@ El subsistema central será únicamente utilizado por el administrador del siste
 
 \subsubsection{RQuerySystem}
 
-Encarna la aplicación principal de sistema. Generado previamente el índice, permitirá consultas por parte de los usuarios y responderá a sus peticiones con los documentos más relevantes.
+Encarna la aplicación principal de sistema. Generado previamente el índice, permitirá consultas por parte de los usuarios y responderá a sus peticiones con los documentos más relevantes mediante una interfaz gráfica muy intuitiva. En ella se puede buscar por facetas y hacer consultas relativamente complejas en varios campos con operadores lógicos.
+
+\begin{figure}[H] %con el [H] le obligamos a situar aquí la figura
+	\centering
+	\includegraphics[scale=0.5]{resultado.png}  %el parámetro scale permite agrandar o achicar la imagen. En el nombre de archivo puede especificar directorios
+	\caption{Imagen de la interfaz gráfica de la app} 
+\end{figure}
+
 
 \subsection{Requisitos funcionales}
 
@@ -100,10 +107,15 @@ Expongo los distintos requisitos de datos.
 \subsubsection{Requisitos de datos de RQuerySystem}
 
 \begin{itemize}
-	\item \textbf{RD 2.1:} Texto en lenguaje natural (probablemente inglés) y números por parte del usuario.
+	\item \textbf{RD 2.1:} Texto en lenguaje natural (en inglés) y selección de la condición booleana entre consultas.
 	\item \textbf{RD 2.2:} Mismos que en RD 2.1.
 	\item \textbf{RD 2.3:} Resultados de la búsqueda en el índice.
 	\item \textbf{RD 2.4:} Los mismos que en RD 2.3 presentados al usuario.
+\end{itemize}
+
+\subsubsection{Requisitos semánticos de RQuerySystem}
+\begin{itemize}
+	\item \textbf{RS 2.1} Se deben rellenar \textbf{todos} los campos que se expongan en la GUI.
 \end{itemize}
 
 \subsection{Esquemas}
@@ -129,7 +141,7 @@ Expongo los distintos requisitos de datos.
 \begin{figure}[H] %con el [H] le obligamos a situar aquí la figura
 	\centering
 	\includegraphics[scale=0.5]{r-fd.png}  %el parámetro scale permite agrandar o achicar la imagen. En el nombre de archivo puede especificar directorios
-	\caption{Flujo de datos RQuerySystem} 
+	\caption{Flujo de datos RQuerySystem (Mostrar datos representa a la interfaz de usuario)} 
 \end{figure}
 
 \newpage
