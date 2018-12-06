@@ -18,7 +18,7 @@ import searcher.Buscador;
 public class InterfazRQuerySystem extends JFrame {
 
 	private JPanel contentPane;
-	private final PanelQueries panelQueries = new PanelQueries();
+	private final PanelQueries panelQueries;
 	private PanelFacets panelFacets;
 	private PanelOutput panelOutput;
 	private Buscador searcher;
@@ -48,13 +48,14 @@ public class InterfazRQuerySystem extends JFrame {
 		setTitle("RQuerySystem");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 455);
+		panelQueries = new PanelQueries(this);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(panelQueries, BorderLayout.CENTER);
 		
-		panelFacets = new PanelFacets();
+		panelFacets = new PanelFacets(this);
 		contentPane.add(panelFacets, BorderLayout.NORTH);
 		
 		panelOutput = new PanelOutput();
@@ -77,14 +78,25 @@ public class InterfazRQuerySystem extends JFrame {
 			not = true;
 		}
 		
-		
+		String resultado = "";
 		ArrayList<Document> documentos = searcher.SearchQuery(q1, q2, f1, f2, must, should, not, 20);
-		
+		for(int i=0; i<documentos.size();i++) {
+			if(documentos.get(i).get("ID-a")==null)
+				resultado = resultado + "ID-q: " + documentos.get(i).get("ID-q") + " ID-user: " + documentos.get(i).get("ID-user") + " Rate: " + documentos.get(i).get("rate") + " Title: " + documentos.get(i).get("title") + "\n";
+			else
+				resultado = resultado + "ID-a:" + documentos.get(i).get("ID-a")+   " ID-user: " + documentos.get(i).get("ID-user") + " Rate: " + documentos.get(i).get("puntuacion") +  "\n";
+		}
+		System.out.println(resultado);
+		panelOutput.setResultado(resultado);
 	}
 
 	public void Faceta(String faceta) throws IOException {
-		ArrayList<Document> documentos = searcher.SearchbyFacet(faceta, 20);
-		
+		String resultado = "";
+		ArrayList<Document> documentos = searcher.SearchbyFacet(faceta, 5);
+		for(int i=0; i<documentos.size();i++) {
+			resultado = resultado + "ID-q: " + documentos.get(i).get("ID-q") + " ID-user: " + documentos.get(i).get("ID-user") + " Rate: " + documentos.get(i).get("rate") + " Title: " + documentos.get(i).get("title") +  "\n";
+		}
+		panelOutput.setResultado(resultado);
 	}
 
 }
