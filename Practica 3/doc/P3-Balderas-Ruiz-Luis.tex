@@ -167,4 +167,12 @@ Expongo los distintos requisitos de datos.
 \newpage
 \section{Manual de usuario}
 
+El diseño de este sistema está totalmente pensado para usuarios sin ninguna formación previa en consultas sobre índices. Con esta idea, utilizo un QueryParser en las consultas por campos, luego admite de manera total el lenguaje natural. El usuario podrá elegir en qué campo buscar cada consulta y cómo están relacionadas entre sí ambas. La primera siempre aparece y condiciona la disposición de la segunda. Los resultados se mostrarán en el cuadro de texto correspondiente. Por defecto, el número de salidas es 20, buscando 5 respuestas a cada pregunta formulada en el dataset. Con la intención de mejorar las inconsistencias que se dan a veces en los foros de StackOverFlow (las respuestas dadas por los usuarios pueden ser totalmente contradictorias), las respuestas que incluyo son aquellas que han sido aceptadas y las muestro ordenadas por la puntuación, no por el score que me devuelve la función similarity. Por tanto, la salida del programa devuelve un conjunto de preguntas almacenadas en el dataset ordenadas por BM25similarity y, asociada a cada pregunta, un conjunto de máximo 5 respuestas aceptadas (incluído como Facet para posibles modificaciones futuras, implementado como BooleanQuery) a dicha pregunta ordenadas por la puntuación recibida en la plataforma.
+\\
+
+Para el desarrollo de facetas o categorías he actuado a la manera de StackOverflow. Doy la posibilidad de buscar por categorías (almacenadas en el archivo Tag.csv). Esas categorías están asociadas a un \textit{ID-q} que luego busco sobre el índice de preguntas. Por supuesto, si se introduce un valor que no está contemplado como categoría, el resultado será vacío.
+\\
+
+Es un requisito para la utilización del programa que se rellenen todos los campos en uso, i.e., si se hace búsqueda por campos es necesario completar los dos cuadros de texto con su campo y decir qué relación hay entre ellos.
+
 \end{document}
